@@ -1,2 +1,2 @@
 Golden Delicious
-Based on Spring Framework(Boot, Sequrity, Web, MVC, Data)
+Based on Spring Framework(Boot, Seсurity, Web, MVC, Data)
