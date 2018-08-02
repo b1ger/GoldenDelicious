@@ -1,4 +1,4 @@
-package org.ontario.goldendelicious.modules.authorization.controllers;
+package org.ontario.goldendelicious.controllers;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -9,20 +9,21 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
-public class LoginControllerTest {
+public class IndexControllerTest {
 
-    private LoginController controller;
+    private IndexController controller;
     private MockMvc mockMvc;
 
     @Before
     public void setUp() throws Exception {
-        this.controller = new LoginController();
+        this.controller = new IndexController();
         this.mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
     }
 
     @Test
-    public void loginAction() throws Exception {
-        mockMvc.perform(get("/login"))
+    public void indexAction() throws Exception {
+
+        mockMvc.perform(get("/"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("loginform"));
     }
