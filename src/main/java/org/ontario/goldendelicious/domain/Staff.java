@@ -3,6 +3,7 @@ package org.ontario.goldendelicious.domain;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.ontario.goldendelicious.domain.enums.StaffType;
 
 import javax.persistence.*;
 
@@ -30,4 +31,11 @@ public class Staff {
 
     @Column(name = "updated_at")
     private Long updatedAt;
+
+    private String username;
+
+    @Transient
+    private String password;
+
+    private String passwordHash;
 }
