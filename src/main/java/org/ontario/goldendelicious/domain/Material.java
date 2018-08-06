@@ -3,28 +3,30 @@ package org.ontario.goldendelicious.domain;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.ontario.goldendelicious.domain.enums.MaterialType;
 
 import javax.persistence.*;
-import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
-public class Record {
+public class Material {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long doctorId;
+    @Enumerated(value = EnumType.STRING)
+    private MaterialType type;
 
     private String description;
 
-    @ManyToOne
-    private PatientCard card;
+    private Double price;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "record")
-    private Set<Service> services = new HashSet<>();
+    private Integer quantity;
+
+    @ManyToMany(mappedBy = "materials")
+    private Set<Service> services;
 }
