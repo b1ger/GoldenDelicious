@@ -6,6 +6,7 @@ import lombok.Setter;
 import org.ontario.goldendelicious.domain.enums.ServiceType;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -33,7 +34,7 @@ public class Service {
     @JoinTable(name = "service_material",
             joinColumns = @JoinColumn(name = "service_id"),
             inverseJoinColumns = @JoinColumn(name = "material_id"))
-    private Set<Material> materials;
+    private Set<Material> materials = new HashSet<>();
 
     @ManyToOne
     private Record record;

@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -21,6 +22,6 @@ public class PatientCard {
     private Patient patient;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "card")
-    private List<Record> records;
+    private List<Record> records = new ArrayList<>();
 
 }
