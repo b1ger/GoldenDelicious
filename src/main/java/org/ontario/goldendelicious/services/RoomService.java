@@ -4,6 +4,7 @@ import javassist.NotFoundException;
 import org.ontario.goldendelicious.commands.RoomCommand;
 import org.ontario.goldendelicious.domain.Room;
 
+import java.util.List;
 import java.util.Set;
 
 public interface RoomService {
@@ -13,5 +14,5 @@ public interface RoomService {
     RoomCommand findRoomCommandById(Long id);
     RoomCommand saveRoomCommand(RoomCommand command);
     void deleteById(Long id);
-    Set<RoomCommand> listAllRooms();
+    List<Room> listAllRooms();
 }

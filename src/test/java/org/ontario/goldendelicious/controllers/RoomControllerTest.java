@@ -49,8 +49,6 @@ public class RoomControllerTest {
         command.setId(3L);
         command.setDescription("some_description");
 
-        System.out.println(command);
-
         //when
         when(roomService.saveRoomCommand(any())).thenReturn(command);
 

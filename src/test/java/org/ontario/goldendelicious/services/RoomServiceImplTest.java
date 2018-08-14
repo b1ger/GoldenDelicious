@@ -4,16 +4,14 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.ontario.goldendelicious.domain.Room;
 import org.ontario.goldendelicious.commands.RoomCommand;
 import org.ontario.goldendelicious.converters.RoomCommandToRoom;
 import org.ontario.goldendelicious.converters.RoomToRoomCommand;
-import org.ontario.goldendelicious.domain.Room;
 import org.ontario.goldendelicious.exceptions.NotFoundException;
 import org.ontario.goldendelicious.repositories.RoomRepository;
 
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
@@ -134,7 +132,7 @@ public class RoomServiceImplTest {
 
     @Test
     public void listAllRoomsTest() {
-        Set<Room> rooms = new HashSet<>();
+        List<Room> rooms = new ArrayList<>();
         Room room1 = new Room();
         room1.setId(1L);
         rooms.add(room1);
@@ -143,11 +141,10 @@ public class RoomServiceImplTest {
         room2.setId(2L);
         rooms.add(room2);
 
-        when(roomRepository.findAll()).thenReturn(rooms);
+        when(roomRepository.findAllByOrderById()).thenReturn(rooms);
 
-        Set<RoomCommand> commands = roomService.listAllRooms();
-        System.out.println(commands.size());
-        assertEquals(1, commands.size());
-        verify(roomRepository, times(1)).findAll();
+        List<Room> commands = roomService.listAllRooms();
+        assertEquals(2, commands.size());
+        verify(roomRepository, times(1)).findAllByOrderById();
     }
 }
