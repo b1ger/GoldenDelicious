@@ -8,7 +8,7 @@ import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ChairCommandToChair implements Converter<ChairCommand,Chair> {
+public class ChairCommandToChair implements Converter<ChairCommand, Chair> {
 
     @Synchronized
     @Nullable

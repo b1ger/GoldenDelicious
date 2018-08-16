@@ -12,7 +12,7 @@ public class ChairCommandToChairTest {
 
     private static final Long ID_VALUE = new Long(1L);
     private static final String DESCRIPTION = "description";
-    ChairCommandToChair converter;
+    private ChairCommandToChair converter;
 
     @Before
     public void setUp() throws Exception {
