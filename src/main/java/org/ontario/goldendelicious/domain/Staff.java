@@ -3,6 +3,7 @@ package org.ontario.goldendelicious.domain;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 import org.ontario.goldendelicious.domain.enums.StaffType;
 
 import javax.persistence.*;
@@ -11,6 +12,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @NoArgsConstructor
+@ToString
 public class Staff {
 
     @Id
@@ -38,4 +40,7 @@ public class Staff {
     private String password;
 
     private String passwordHash;
+
+    @Lob
+    private Byte[] image;
 }
