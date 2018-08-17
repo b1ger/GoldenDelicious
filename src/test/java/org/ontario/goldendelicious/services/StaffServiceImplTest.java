@@ -12,7 +12,9 @@ import org.ontario.goldendelicious.exceptions.NotFoundException;
 import org.ontario.goldendelicious.repositories.StaffRepository;
 import org.springframework.mock.web.MockMultipartFile;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -97,14 +99,16 @@ public class StaffServiceImplTest {
     }
 
     @Test
-    public void saveStaffCommand() {
+    public void saveStaffCommand() throws IOException {
         // given
         StaffCommand command = new StaffCommand();
         command.setId(1L);
         command.setUsername("username");
+        command.setPassword("password");
         Staff staff = new Staff();
         staff.setId(1L);
         staff.setUsername("username");
+        staff.setPassword("password");
         MockMultipartFile mockFile = new MockMultipartFile("imagefile", "testing.txt", "text/plain", "GD".getBytes());
 
         // when
@@ -141,5 +145,15 @@ public class StaffServiceImplTest {
         Staff staffReturned = staffService.findById(3L);
 
         // should be BOOM!!!!
+    }
+
+    @Test
+    public void getBytesFromFileTest() throws IOException {
+        // given
+        MockMultipartFile mockFile = new MockMultipartFile("imagefile", "testing.txt", "text/plain", "GD".getBytes());
+
+        // then
+        assertEquals(mockFile.getBytes().length, staffService.getBytesFromFile(mockFile).length);
+        assertNotNull(staffService.getBytesFromFile(mockFile));
     }
 }

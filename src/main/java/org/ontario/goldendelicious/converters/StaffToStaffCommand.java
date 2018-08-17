@@ -7,6 +7,11 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 @Component
 public class StaffToStaffCommand implements Converter<Staff, StaffCommand> {
 
@@ -23,6 +28,9 @@ public class StaffToStaffCommand implements Converter<Staff, StaffCommand> {
         command.setImage(source.getImage());
         command.setFirstName(source.getFirstName());
         command.setLastName(source.getLastName());
+        DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+        String date = format.format(source.getBirthDate());
+        command.setBirthDate(date);
         command.setUsername(source.getUsername());
         command.setType(source.getType());
         command.setPasswordHash(source.getPasswordHash());

@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -61,13 +62,18 @@ public class StaffServiceImpl implements StaffService {
     @Transactional
     public StaffCommand saveStaffCommand(StaffCommand command, MultipartFile file) {
         Date date = new Date();
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        command.setImage(getBytesFromFile(file));
+        System.out.println("2: " + file.getSize() + ". Current size: " + Arrays.toString(command.getImage()));
+        if (file.getSize() > 0) {
+            command.setImage(getBytesFromFile(file));
+        }
         command.setCreatedAt(date.getTime());
         command.setUpdatedAt(command.getCreatedAt());
-        command.setPasswordHash(encoder.encode(command.getPassword()));
+        if (command.getPassword() != null) {
+            BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+            command.setPasswordHash(encoder.encode(command.getPassword()));
+        }
         Staff detached = staffCommandToStaff.convert(command);
-        System.out.println(detached);
+
         Staff saved = repository.save(detached);
         log.debug("Saved Room with id: " + saved.getId());
 
@@ -80,7 +86,7 @@ public class StaffServiceImpl implements StaffService {
         repository.deleteById(id);
     }
 
-    private Byte[] getBytesFromFile(MultipartFile file) {
+    public Byte[] getBytesFromFile(MultipartFile file) {
         Byte[] byteObject = null;
         try {
             byteObject = new Byte[file.getBytes().length];
