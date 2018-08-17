@@ -5,8 +5,10 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.ontario.goldendelicious.domain.enums.StaffType;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Getter
@@ -24,6 +26,10 @@ public class Staff {
 
     @Column(name = "last_name")
     private String lastName;
+
+    @Column
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
+    private Date birthDate;
 
     @Enumerated(value = EnumType.STRING)
     private StaffType type;

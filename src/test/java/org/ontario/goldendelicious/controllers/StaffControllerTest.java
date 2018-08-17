@@ -5,21 +5,18 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.ontario.goldendelicious.commands.StaffCommand;
+import org.ontario.goldendelicious.repositories.StaffRepository;
 import org.ontario.goldendelicious.services.StaffServiceImpl;
-import org.springframework.http.MediaType;
-import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import static org.mockito.ArgumentMatchers.any;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.junit.Assert.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 public class StaffControllerTest {
 
@@ -27,6 +24,8 @@ public class StaffControllerTest {
     private MockMvc mockMvc;
     @Mock
     private StaffServiceImpl staffService;
+    @Mock
+    private StaffRepository staffRepository;
 
     @Before
     public void setUp() throws Exception {
@@ -80,5 +79,48 @@ public class StaffControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("staff"))
                 .andExpect(view().name("staff/view"));
+    }
+
+    @Test
+    public void testRenderImageFromDb() throws Exception {
+        // given
+        StaffCommand staffCommand = new StaffCommand();
+        staffCommand.setId(1L);
+
+        String testStr = "Test string text";
+        Byte[] bytesBoxed = new Byte[testStr.getBytes().length];
+
+        int i = 0;
+        for (byte b : testStr.getBytes()) {
+            bytesBoxed[i++] = b;
+        }
+
+        staffCommand.setImage(bytesBoxed);
+        when(staffService.findStaffCommandById(anyLong())).thenReturn(staffCommand);
+
+        // when
+        MockHttpServletResponse response = mockMvc.perform(get("/staff/1/profileimage"))
+                .andExpect(status().isOk())
+                .andReturn().getResponse();
+
+        byte[] responseBytes = response.getContentAsByteArray();
+
+        assertEquals(bytesBoxed.length, responseBytes.length);
+    }
+
+    @Test
+    public void updateAction() throws Exception {
+        // given
+        StaffCommand command = new StaffCommand();
+        command.setId(1L);
+
+        // when
+        when(staffService.findStaffCommandById(anyLong())).thenReturn(command);
+
+        // then
+        mockMvc.perform(get("/staff/1/update"))
+                .andExpect(status().isOk())
+                .andExpect(model().attributeExists("staff"))
+                .andExpect(view().name("staff/staffform"));
     }
 }

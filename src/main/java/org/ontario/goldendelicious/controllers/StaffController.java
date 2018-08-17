@@ -1,7 +1,7 @@
 package org.ontario.goldendelicious.controllers;
 
 import lombok.extern.slf4j.Slf4j;
-import org.ontario.goldendelicious.commands.RoomCommand;
+import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.ontario.goldendelicious.commands.StaffCommand;
 import org.ontario.goldendelicious.services.StaffService;
 import org.springframework.stereotype.Controller;
@@ -10,16 +10,18 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.util.Arrays;
+import java.io.InputStream;
 
 @Slf4j
 @Controller
 public class StaffController {
 
     private StaffService staffService;
-    private final String ROOM_ROOMFORM_URL = "/staff/staffform";
+    private final String STAFF_STAFFFORM_URL = "/staff/staffform";
 
     public StaffController(StaffService staffService) {
         this.staffService = staffService;
@@ -30,7 +32,7 @@ public class StaffController {
         StaffCommand staffCommand = new StaffCommand();
         model.addAttribute("staff", staffCommand);
 
-        return "staff/staffform";
+        return STAFF_STAFFFORM_URL;
     }
 
     @PostMapping("/staff/save")
@@ -43,7 +45,7 @@ public class StaffController {
                 log.debug(objectError.toString());
             });
 
-            return ROOM_ROOMFORM_URL;
+            return STAFF_STAFFFORM_URL;
         }
 
         StaffCommand savedCommand = staffService.saveStaffCommand(staffCommand, file);
@@ -57,5 +59,31 @@ public class StaffController {
         model.addAttribute("staff", command);
 
         return "staff/view";
+    }
+
+    @GetMapping("/staff/{id}/update")
+    public String updateAction(@PathVariable String id, Model model) {
+        StaffCommand command = staffService.findStaffCommandById(Long.valueOf(id));
+        model.addAttribute("staff", command);
+
+        return STAFF_STAFFFORM_URL;
+    }
+
+    @GetMapping("/staff/{id}/profileimage")
+    public void renderImageFromDB(@PathVariable String id, HttpServletResponse response) throws IOException {
+        StaffCommand staffCommand = staffService.findStaffCommandById(Long.valueOf(id));
+
+        if (staffCommand.getImage() != null) {
+            byte[] byteArray = new byte[staffCommand.getImage().length];
+            int i = 0;
+
+            for (Byte wrappedByte : staffCommand.getImage()){
+                byteArray[i++] = wrappedByte;
+            }
+
+            response.setContentType("image/jpeg");
+            InputStream is = new ByteArrayInputStream(byteArray);
+            IOUtils.copy(is, response.getOutputStream());
+        }
     }
 }
