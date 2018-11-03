@@ -7,7 +7,9 @@ import org.mockito.MockitoAnnotations;
 import org.ontario.goldendelicious.commands.StaffCommand;
 import org.ontario.goldendelicious.repositories.StaffRepository;
 import org.ontario.goldendelicious.services.StaffServiceImpl;
+import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletResponse;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
@@ -16,6 +18,8 @@ import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 public class StaffControllerTest {
@@ -40,29 +44,36 @@ public class StaffControllerTest {
         mockMvc.perform(get("/staff/new"))
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("staff"))
-                .andExpect(view().name("staff/staffform"));
+                .andExpect(view().name("staff/stafform"));
+    }
+
+    @Test
+    public void indexActionTest() throws Exception {
+        mockMvc.perform(get("/staff/index"))
+                .andExpect(status().isOk())
+                .andExpect(model().attributeExists("models"))
+                .andExpect(view().name("staff/index"));
+
+        verify(staffService, times(1)).getStaffListOrderByType();
     }
 
     @Test
     public void saveActionTest() throws Exception {
         // given
-//        StaffCommand command = new StaffCommand();
-//        command.setId(1L);
-//        MockMultipartFile multipartFile =
-//                new MockMultipartFile("imagefile", "testing.txt", "text/plain", "Hello World from SpringBoot".getBytes());
-//
-//        // when
-//        when(staffService.saveStaffCommand(any(), any())).thenReturn(command);
-//
-//        // then
-//        mockMvc.perform(post("/staff/save")
-//                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-//                .param("id", "1")
-//        )
-//                .andExpect(status().is3xxRedirection())
-//                .andExpect(view().name("redirect:/staff/{id}/view"));
+        StaffCommand command = new StaffCommand();
+        command.setId(1L);
+        MockMultipartFile multipartFile =
+                new MockMultipartFile("imagefile", "testing.txt", "text/plain", "Hello World from SpringBoot".getBytes());
 
-        assertTrue(true);
+        // when
+        when(staffService.saveStaffCommand(any(), any())).thenReturn(command);
+
+        // then
+        mockMvc.perform(multipart("/staff/save").file(multipartFile)
+                .param("id", "1")
+        )
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:/staff/1/view"));
     }
 
     @Test
@@ -121,6 +132,6 @@ public class StaffControllerTest {
         mockMvc.perform(get("/staff/1/update"))
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("staff"))
-                .andExpect(view().name("staff/staffform"));
+                .andExpect(view().name("staff/stafform"));
     }
 }

@@ -25,9 +25,8 @@ public class StaffCommand {
     private StaffType type;
     private Long createdAt;
     private Long updatedAt;
-    private String username;
+    private String userName;
     private String password;
-    private String passwordHash;
     private Byte[] image;
 
     public int getAge() throws ParseException {

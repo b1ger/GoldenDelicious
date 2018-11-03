@@ -39,9 +39,9 @@ public class StaffCommandToStaff implements Converter<StaffCommand, Staff> {
         }
 
         staff.setBirthDate(date);
-        staff.setUsername(source.getUsername());
+        staff.setUserName(source.getUserName());
         staff.setType(source.getType());
-        staff.setPasswordHash(source.getPasswordHash());
+        staff.setPassword(source.getPassword());
         staff.setCreatedAt(source.getCreatedAt());
         if (source.getUpdatedAt() != null) {
             staff.setUpdatedAt(source.getUpdatedAt());

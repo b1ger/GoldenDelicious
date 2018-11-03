@@ -16,27 +16,25 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `service_material`
+-- Table structure for table `staffs_authority`
 --
 
-DROP TABLE IF EXISTS `service_material`;
+DROP TABLE IF EXISTS `staffs_authority`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `service_material` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `service_id` bigint(20) NOT NULL,
-  `material_id` bigint(20) NOT NULL,
-  PRIMARY KEY (`id`)
+CREATE TABLE `staffs_authority` (
+  `staff_id` bigint(20) NOT NULL,
+  `authority_name` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `service_material`
+-- Dumping data for table `staffs_authority`
 --
 
-LOCK TABLES `service_material` WRITE;
-/*!40000 ALTER TABLE `service_material` DISABLE KEYS */;
-/*!40000 ALTER TABLE `service_material` ENABLE KEYS */;
+LOCK TABLES `staffs_authority` WRITE;
+/*!40000 ALTER TABLE `staffs_authority` DISABLE KEYS */;
+/*!40000 ALTER TABLE `staffs_authority` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -48,4 +46,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-08-17 16:15:36
+-- Dump completed on 2018-11-02 15:20:11

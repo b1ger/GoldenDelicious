@@ -16,28 +16,27 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `record`
+-- Table structure for table `room`
 --
 
-DROP TABLE IF EXISTS `record`;
+DROP TABLE IF EXISTS `room`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `record` (
+CREATE TABLE `room` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `doctor_id` bigint(20) NOT NULL,
   `description` varchar(255) NOT NULL,
-  `card_id` bigint(20) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `record`
+-- Dumping data for table `room`
 --
 
-LOCK TABLES `record` WRITE;
-/*!40000 ALTER TABLE `record` DISABLE KEYS */;
-/*!40000 ALTER TABLE `record` ENABLE KEYS */;
+LOCK TABLES `room` WRITE;
+/*!40000 ALTER TABLE `room` DISABLE KEYS */;
+INSERT INTO `room` VALUES (7,'Room #1'),(8,'Room #2'),(9,'Room #3'),(10,'Room #4'),(11,'Room #5');
+/*!40000 ALTER TABLE `room` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -49,4 +48,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-08-17 16:15:36
+-- Dump completed on 2018-11-02 15:20:11
