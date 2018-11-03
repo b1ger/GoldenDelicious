@@ -16,28 +16,36 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `chair`
+-- Table structure for table `staff`
 --
 
-DROP TABLE IF EXISTS `chair`;
+DROP TABLE IF EXISTS `staff`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `chair` (
+CREATE TABLE `staff` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `room_id` bigint(20) NOT NULL,
-  `description` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+  `password_hash` varchar(255) NOT NULL,
+  `first_name` varchar(45) NOT NULL,
+  `last_name` varchar(45) NOT NULL,
+  `type` varchar(45) NOT NULL,
+  `created_at` bigint(20) NOT NULL,
+  `updated_at` bigint(20) DEFAULT NULL,
+  `image` longblob,
+  `birth_date` date DEFAULT NULL,
+  `user_name` varchar(50) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `user_name_UNIQUE` (`user_name`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `chair`
+-- Dumping data for table `staff`
 --
 
-LOCK TABLES `chair` WRITE;
-/*!40000 ALTER TABLE `chair` DISABLE KEYS */;
-INSERT INTO `chair` VALUES (1,7,'Chair #1');
-/*!40000 ALTER TABLE `chair` ENABLE KEYS */;
+LOCK TABLES `staff` WRITE;
+/*!40000 ALTER TABLE `staff` DISABLE KEYS */;
+INSERT INTO `staff` VALUES (1,'$2a$10$IkPzq1jWa/llzCOm3wvz4eT315QyO9lZ8IvGoLE8lBiXQXol0aCIi','Bogdan','Gerashchencko','ADMINISTRATOR',1541147734726,1541147734726,NULL,'1990-06-28','ontario');
+/*!40000 ALTER TABLE `staff` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -49,4 +57,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-08-17 16:15:36
+-- Dump completed on 2018-11-02 15:20:12

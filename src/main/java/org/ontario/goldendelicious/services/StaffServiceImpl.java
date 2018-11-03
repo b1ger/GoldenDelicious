@@ -13,10 +13,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @Slf4j
 @Service
@@ -70,7 +69,7 @@ public class StaffServiceImpl implements StaffService {
         command.setUpdatedAt(command.getCreatedAt());
         if (command.getPassword() != null) {
             BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-            command.setPasswordHash(encoder.encode(command.getPassword()));
+            command.setPassword(encoder.encode(command.getPassword()));
         }
         Staff detached = staffCommandToStaff.convert(command);
 
@@ -100,5 +99,16 @@ public class StaffServiceImpl implements StaffService {
         }
 
         return byteObject;
+    }
+
+    public List<StaffCommand> getStaffListOrderByType() {
+        List<Staff> list = repository.findAllByOrderByType();
+        List<StaffCommand> models = new ArrayList<>();
+
+        for (Staff item : list) {
+            models.add(staffToStaffCommand.convert(item));
+        }
+
+        return models;
     }
 }

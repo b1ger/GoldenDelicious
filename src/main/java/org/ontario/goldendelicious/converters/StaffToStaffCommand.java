@@ -31,9 +31,9 @@ public class StaffToStaffCommand implements Converter<Staff, StaffCommand> {
         DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
         String date = format.format(source.getBirthDate());
         command.setBirthDate(date);
-        command.setUsername(source.getUsername());
+        command.setUserName(source.getUserName());
         command.setType(source.getType());
-        command.setPasswordHash(source.getPasswordHash());
+        command.setPassword(source.getPassword());
         command.setCreatedAt(source.getCreatedAt());
         if (source.getUpdatedAt() != null) {
             command.setUpdatedAt(source.getUpdatedAt());

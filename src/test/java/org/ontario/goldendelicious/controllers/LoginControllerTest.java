@@ -1,6 +1,7 @@
 package org.ontario.goldendelicious.controllers;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.ontario.goldendelicious.controllers.LoginController;
 import org.springframework.test.web.servlet.MockMvc;
@@ -21,6 +22,7 @@ public class LoginControllerTest {
         this.mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
     }
 
+    @Ignore("Use Spring Security formLogin loginPage")
     @Test
     public void loginAction() throws Exception {
         mockMvc.perform(get("/login"))

@@ -8,15 +8,13 @@ import org.ontario.goldendelicious.commands.StaffCommand;
 import org.ontario.goldendelicious.converters.StaffCommandToStaff;
 import org.ontario.goldendelicious.converters.StaffToStaffCommand;
 import org.ontario.goldendelicious.domain.Staff;
+import org.ontario.goldendelicious.domain.enums.StaffType;
 import org.ontario.goldendelicious.exceptions.NotFoundException;
 import org.ontario.goldendelicious.repositories.StaffRepository;
 import org.springframework.mock.web.MockMultipartFile;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
@@ -103,11 +101,11 @@ public class StaffServiceImplTest {
         // given
         StaffCommand command = new StaffCommand();
         command.setId(1L);
-        command.setUsername("username");
+        command.setUserName("username");
         command.setPassword("password");
         Staff staff = new Staff();
         staff.setId(1L);
-        staff.setUsername("username");
+        staff.setUserName("username");
         staff.setPassword("password");
         MockMultipartFile mockFile = new MockMultipartFile("imagefile", "testing.txt", "text/plain", "GD".getBytes());
 
@@ -140,8 +138,6 @@ public class StaffServiceImplTest {
         Staff staff = new Staff();
         staff.setId(5L);
 
-        //when(roomRepository.findById(anyLong())).thenThrow(new NotFoundException("Room not found"));
-
         Staff staffReturned = staffService.findById(3L);
 
         // should be BOOM!!!!
@@ -155,5 +151,28 @@ public class StaffServiceImplTest {
         // then
         assertEquals(mockFile.getBytes().length, staffService.getBytesFromFile(mockFile).length);
         assertNotNull(staffService.getBytesFromFile(mockFile));
+    }
+
+    @Test
+    public void getStaffListOrderByType() {
+        // given
+        Staff item1 = new Staff();
+        item1.setId(1L);
+        item1.setType(StaffType.ADMINISTRATOR);
+        Staff item2 = new Staff();
+        item2.setId(2L);
+        item2.setType(StaffType.DOCTOR);
+        List<Staff> items = new ArrayList<>();
+        items.add(item1);
+        items.add(item2);
+
+        // when
+        when(repository.findAllByOrderByType()).thenReturn(items);
+        List<StaffCommand> staff = staffService.getStaffListOrderByType();
+
+        // then
+        assertEquals(2, staff.size());
+        verify(repository, times(1)).findAllByOrderByType();
+        verify(repository, never()).findById(anyLong());
     }
 }

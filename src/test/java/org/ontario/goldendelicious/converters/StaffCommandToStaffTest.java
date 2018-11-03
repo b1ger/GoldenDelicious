@@ -33,7 +33,19 @@ public class StaffCommandToStaffTest {
 
     @Test
     public void testEmptyObject() throws Exception {
-        assertNotNull(converter.convert(new StaffCommand()));
+        StaffCommand command = new StaffCommand();
+        command.setId(ID_VALUE);
+        command.setFirstName(FIRS_NAME);
+        command.setLastName(LAST_NAME);
+        command.setType(TYPE);
+        command.setCreatedAt(CREATED_AT);
+        command.setUpdatedAt(UPDATED_AT);
+        command.setUserName(USERNAME);
+        command.setPassword(PASS_HASH);
+        command.setImage(IMAGE);
+        command.setBirthDate("22-10-1990");
+
+        assertNotNull(converter.convert(command));
     }
 
     @Test
@@ -46,16 +58,17 @@ public class StaffCommandToStaffTest {
         command.setType(TYPE);
         command.setCreatedAt(CREATED_AT);
         command.setUpdatedAt(UPDATED_AT);
-        command.setUsername(USERNAME);
-        command.setPasswordHash(PASS_HASH);
+        command.setUserName(USERNAME);
+        command.setPassword(PASS_HASH);
         command.setImage(IMAGE);
+        command.setBirthDate("22-10-1990");
 
         //when
         Staff staff = converter.convert(command);
 
         //then
         assertEquals(ID_VALUE, staff.getId());
-        assertEquals(USERNAME, staff.getUsername());
+        assertEquals(USERNAME, staff.getUserName());
         assertEquals(IMAGE, staff.getImage());
     }
 }

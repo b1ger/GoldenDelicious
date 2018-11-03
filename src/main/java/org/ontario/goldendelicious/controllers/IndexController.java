@@ -13,11 +13,11 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class IndexController {
 
-    @GetMapping({"", "/", "/index"})
-    public String indexAction() {
-
-        return "loginform";
-    }
+//    @GetMapping({"", "/", "/index"})
+//    public String indexAction() {
+//
+//        return "loginform";
+//    }
 
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(NotFoundException.class)
