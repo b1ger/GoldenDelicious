@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header-content">
+    <title id="pageTitle">GD</title>
+</head>
+
+<body>
+<div class="w-75 mx-auto">
+    <nav th:replace="fragments/navbar :: navbar-content"></nav>
+    <h1>Index page</h1>
+    <div th:include="fragments/footer :: footer-scripts"></div>
+</div>
+</body>
+</html>

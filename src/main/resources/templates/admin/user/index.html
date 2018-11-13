@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:include="fragments/header :: header-content">
+    <title id="pageTitle">Users</title>
+</head>
+<body>
+<div class="w-75 mx-auto">
+    <nav th:replace="fragments/navbar :: admin-navbar-content"></nav>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a th:href="@{/admin/index}" href="#">Admin panel</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Users</li>
+        </ol>
+    </nav>
+    <a class="btn btn-primary float-right mb-3" href="#" th:href="@{/admin/user/create}">Create new</a>
+    <table class="table table-striped mt-2">
+        <thead class="thead-dark">
+        <tr>
+            <th>Photo</th>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Birth date</th>
+            <th>Created at</th>
+            <th>Updated at</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="user : ${usersList}">
+            <td><a th:href="@{'/admin/user/' + ${user.getId()} + '/view'}">
+                <img src="#"
+                     th:src="@{'/staff/' + ${user.getId()} + '/profileimage'}"
+                     height="50">
+                </a>
+            </td>
+            <td><a th:text="${user.getFirstName() + ' ' + user.getLastName()}" href="#" th:href="@{'/admin/user/' + ${user.getId()} + '/view'}"></a></td>
+            <td th:text="${user.getType()}"></td>
+            <td th:text="${#dates.format(user.getBirthDate(), 'd MMM y')}"></td>
+            <td th:text="${#dates.format(user.getCreatedAt(), 'd MMM y')}"></td>
+            <td th:text="${#dates.format(user.getUpdatedAt(), 'd MMM y')}"></td>
+            <td>
+                <a class="badge badge-danger" th:href="@{'/admin/user/' + ${user.getId()} + '/delete'}">Delete</a>
+                <a class="badge badge-success" th:href="@{'/admin/user/' + ${user.getId()} + '/update'}">Update</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div th:include="fragments/footer :: footer-scripts"></div>
+</body>
+</html>
