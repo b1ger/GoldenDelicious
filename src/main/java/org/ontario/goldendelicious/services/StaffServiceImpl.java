@@ -2,6 +2,7 @@ package org.ontario.goldendelicious.services;
 
 import lombok.extern.slf4j.Slf4j;
 import org.ontario.goldendelicious.commands.StaffCommand;
+import org.ontario.goldendelicious.commands.UpdatableStaffCommand;
 import org.ontario.goldendelicious.converters.StaffCommandToStaff;
 import org.ontario.goldendelicious.converters.StaffToStaffCommand;
 import org.ontario.goldendelicious.domain.Staff;
@@ -13,10 +14,11 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @Slf4j
 @Service
@@ -25,6 +27,8 @@ public class StaffServiceImpl implements StaffService {
     private StaffRepository repository;
     private StaffToStaffCommand staffToStaffCommand;
     private StaffCommandToStaff staffCommandToStaff;
+
+    public BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
     public StaffServiceImpl(
             StaffRepository repository,
@@ -60,22 +64,40 @@ public class StaffServiceImpl implements StaffService {
 
     @Override
     @Transactional
-    public StaffCommand saveStaffCommand(StaffCommand command, MultipartFile file) {
+    public StaffCommand saveStaffCommand(StaffCommand command, MultipartFile file) throws IOException {
         Date date = new Date();
         System.out.println("2: " + file.getSize() + ". Current size: " + Arrays.toString(command.getImage()));
-        if (file.getSize() > 0) {
+        if (file.getBytes().length > 0) {
             command.setImage(getBytesFromFile(file));
         }
         command.setCreatedAt(date.getTime());
         command.setUpdatedAt(command.getCreatedAt());
-        if (command.getPassword() != null) {
-            BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-            command.setPasswordHash(encoder.encode(command.getPassword()));
-        }
+        encoder = new BCryptPasswordEncoder();
+        command.setPassword(encoder.encode(command.getPassword()));
         Staff detached = staffCommandToStaff.convert(command);
 
         Staff saved = repository.save(detached);
-        log.debug("Saved Room with id: " + saved.getId());
+        log.debug("Saved Staff with id: " + saved.getId());
+
+        return staffToStaffCommand.convert(saved);
+    }
+
+    @Override
+    @Transactional
+    public StaffCommand updateStaffCommand(UpdatableStaffCommand updatable, MultipartFile imageFile) throws IOException {
+        StaffCommand user = findStaffCommandById(updatable.getId());
+        user = bindParamsToStaffCommand(updatable, user);
+        if (updatable.getPassword() != null) {
+            user.setPassword(encoder.encode(updatable.getPassword()));
+        }
+        if (imageFile.getBytes().length > 0) {
+            user.setImage(getBytesFromFile(imageFile));
+        }
+        Date date = new Date();
+        user.setUpdatedAt(date.getTime());
+
+        Staff detached = staffCommandToStaff.convert(user);
+        Staff saved = repository.save(detached);
 
         return staffToStaffCommand.convert(saved);
     }
@@ -100,5 +122,43 @@ public class StaffServiceImpl implements StaffService {
         }
 
         return byteObject;
+    }
+
+    public List<StaffCommand> getStaffListOrderByType() {
+        List<Staff> list = repository.findAllByOrderByType();
+        List<StaffCommand> models = new ArrayList<>();
+
+        for (Staff item : list) {
+            models.add(staffToStaffCommand.convert(item));
+        }
+
+        return models;
+    }
+
+    public UpdatableStaffCommand bindParamsToUpdatable(StaffCommand command) {
+        UpdatableStaffCommand updatable = new UpdatableStaffCommand();
+
+        updatable.setId(command.getId());
+        updatable.setFirstName(command.getFirstName());
+        updatable.setLastName(command.getLastName());
+        updatable.setUserName(command.getUserName());
+        updatable.setBirthDate(command.getBirthDate());
+        updatable.setType(command.getType());
+        updatable.setImage(command.getImage());
+        updatable.setAbout(command.getAbout());
+
+        return updatable;
+    }
+
+    @Override
+    public StaffCommand bindParamsToStaffCommand(UpdatableStaffCommand updatable, StaffCommand command) {
+        command.setFirstName(updatable.getFirstName());
+        command.setLastName(updatable.getLastName());
+        command.setUserName(updatable.getUserName());
+        command.setType(updatable.getType());
+        command.setAbout(updatable.getAbout());
+        command.setBirthDate(updatable.getBirthDate());
+
+        return command;
     }
 }

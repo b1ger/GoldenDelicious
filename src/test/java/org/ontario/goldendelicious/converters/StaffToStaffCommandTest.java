@@ -6,6 +6,9 @@ import org.ontario.goldendelicious.commands.StaffCommand;
 import org.ontario.goldendelicious.domain.Staff;
 import org.ontario.goldendelicious.domain.enums.StaffType;
 
+import java.util.Calendar;
+import java.util.Date;
+
 import static org.junit.Assert.*;
 
 public class StaffToStaffCommandTest {
@@ -33,7 +36,19 @@ public class StaffToStaffCommandTest {
 
     @Test
     public void testEmptyObject() throws Exception {
-        assertNotNull(converter.convert(new Staff()));
+        Staff staff = new Staff();
+        staff.setId(ID_VALUE);
+        staff.setFirstName(FIRS_NAME);
+        staff.setLastName(LAST_NAME);
+        staff.setType(TYPE);
+        staff.setCreatedAt(CREATED_AT);
+        staff.setUpdatedAt(UPDATED_AT);
+        staff.setUserName(USERNAME);
+        staff.setPassword(PASS_HASH);
+        staff.setImage(IMAGE);
+        staff.setBirthDate(646454546L);
+
+        assertNotNull(converter.convert(staff));
     }
 
     @Test
@@ -46,16 +61,17 @@ public class StaffToStaffCommandTest {
         staff.setType(TYPE);
         staff.setCreatedAt(CREATED_AT);
         staff.setUpdatedAt(UPDATED_AT);
-        staff.setUsername(USERNAME);
-        staff.setPasswordHash(PASS_HASH);
+        staff.setUserName(USERNAME);
+        staff.setPassword(PASS_HASH);
         staff.setImage(IMAGE);
+        staff.setBirthDate(646454546L);
 
         //when
         StaffCommand command = converter.convert(staff);
 
         //then
         assertEquals(ID_VALUE, command.getId());
-        assertEquals(USERNAME, command.getUsername());
-        assertEquals(IMAGE, command.getImage());
+        assertEquals(USERNAME, command.getUserName());
+        assertArrayEquals(IMAGE, command.getImage());
     }
 }

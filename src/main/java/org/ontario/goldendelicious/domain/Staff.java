@@ -4,11 +4,16 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.BatchSize;
+import org.hibernate.annotations.Type;
 import org.ontario.goldendelicious.domain.enums.StaffType;
+import org.springframework.beans.factory.annotation.Required;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -28,8 +33,7 @@ public class Staff {
     private String lastName;
 
     @Column
-    @DateTimeFormat(pattern = "dd-MM-yyyy")
-    private Date birthDate;
+    private Long birthDate;
 
     @Enumerated(value = EnumType.STRING)
     private StaffType type;
@@ -40,13 +44,24 @@ public class Staff {
     @Column(name = "updated_at")
     private Long updatedAt;
 
-    private String username;
+    @Column(unique = true)
+    private String userName;
 
-    @Transient
+    @Column(name = "password_hash")
     private String password;
-
-    private String passwordHash;
 
     @Lob
     private Byte[] image;
+
+    @ManyToMany
+    @JoinTable(name = "staffs_authority",
+            joinColumns = @JoinColumn(name = "staff_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "authority_name", referencedColumnName = "name")
+    )
+    @BatchSize(size = 20)
+    private Set<Authority> authorities = new HashSet<>();
+
+    @Column
+    @Type(type="text")
+    private String about;
 }

@@ -3,6 +3,7 @@ package org.ontario.goldendelicious.controllers;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.ontario.goldendelicious.commands.StaffCommand;
+import org.ontario.goldendelicious.domain.Staff;
 import org.ontario.goldendelicious.services.StaffService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,16 +16,26 @@ import javax.validation.Valid;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
+import java.util.Set;
 
 @Slf4j
 @Controller
 public class StaffController {
 
     private StaffService staffService;
-    private final String STAFF_STAFFFORM_URL = "/staff/staffform";
+    private final String STAFF_STAFFFORM_URL = "staff/stafform";
 
     public StaffController(StaffService staffService) {
         this.staffService = staffService;
+    }
+
+    @GetMapping("/staff/index")
+    public String indexAction(Model model) {
+        List<StaffCommand> models = staffService.getStaffListOrderByType();
+        model.addAttribute("models", models);
+
+        return "staff/index";
     }
 
     @GetMapping("/staff/new")
@@ -33,24 +44,6 @@ public class StaffController {
         model.addAttribute("staff", staffCommand);
 
         return STAFF_STAFFFORM_URL;
-    }
-
-    @PostMapping("/staff/save")
-    public String saveAction(@RequestParam("imagefile") MultipartFile file,
-                             @Valid @ModelAttribute("staff") StaffCommand staffCommand,
-                             BindingResult bindingResult) throws IOException {
-
-        if (bindingResult.hasErrors()) {
-            bindingResult.getAllErrors().forEach(objectError -> {
-                log.debug(objectError.toString());
-            });
-
-            return STAFF_STAFFFORM_URL;
-        }
-
-        StaffCommand savedCommand = staffService.saveStaffCommand(staffCommand, file);
-
-        return "redirect:/staff/" + savedCommand.getId() + "/view";
     }
 
     @GetMapping("/staff/{id}/view")

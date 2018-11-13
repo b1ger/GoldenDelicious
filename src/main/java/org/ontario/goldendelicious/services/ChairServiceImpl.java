@@ -9,7 +9,6 @@ import org.ontario.goldendelicious.exceptions.NotFoundException;
 import org.ontario.goldendelicious.repositories.ChairRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import sun.rmi.runtime.Log;
 
 import java.util.HashSet;
 import java.util.Optional;

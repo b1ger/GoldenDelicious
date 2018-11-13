@@ -8,9 +8,7 @@ import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 
 @Component
 public class StaffToStaffCommand implements Converter<Staff, StaffCommand> {
@@ -28,19 +26,21 @@ public class StaffToStaffCommand implements Converter<Staff, StaffCommand> {
         command.setImage(source.getImage());
         command.setFirstName(source.getFirstName());
         command.setLastName(source.getLastName());
-        DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+        DateFormat format = new SimpleDateFormat("dd.MM.yyyy");
         String date = format.format(source.getBirthDate());
         command.setBirthDate(date);
-        command.setUsername(source.getUsername());
+        command.setUserName(source.getUserName());
         command.setType(source.getType());
-        command.setPasswordHash(source.getPasswordHash());
+        command.setPassword(source.getPassword());
         command.setCreatedAt(source.getCreatedAt());
         if (source.getUpdatedAt() != null) {
             command.setUpdatedAt(source.getUpdatedAt());
         }
-        if (source.getImage() != null) {
+        if (source.getImage() != null && source.getImage().length > 0) {
             command.setImage(source.getImage());
         }
+        command.setAbout(source.getAbout());
+        command.setAuthorities(source.getAuthorities());
 
         return command;
     }

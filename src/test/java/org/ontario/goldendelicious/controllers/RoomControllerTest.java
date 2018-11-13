@@ -2,10 +2,8 @@ package org.ontario.goldendelicious.controllers;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.ontario.goldendelicious.commands.ChairCommand;
 import org.ontario.goldendelicious.commands.RoomCommand;
 import org.ontario.goldendelicious.services.RoomServiceImpl;
 import org.springframework.http.MediaType;
