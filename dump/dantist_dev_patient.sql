@@ -16,28 +16,33 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `record`
+-- Table structure for table `patient`
 --
 
-DROP TABLE IF EXISTS `record`;
+DROP TABLE IF EXISTS `patient`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `record` (
+CREATE TABLE `patient` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `doctor_id` bigint(20) NOT NULL,
-  `description` varchar(255) NOT NULL,
-  `card_id` bigint(20) NOT NULL,
+  `first_name` varchar(45) NOT NULL,
+  `last_name` varchar(45) NOT NULL,
+  `birth_date` bigint(20) NOT NULL,
+  `age` int(11) NOT NULL,
+  `created_at` bigint(20) DEFAULT NULL,
+  `updated_at` bigint(20) DEFAULT NULL,
+  `card_id` bigint(20) DEFAULT NULL,
+  `address` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `record`
+-- Dumping data for table `patient`
 --
 
-LOCK TABLES `record` WRITE;
-/*!40000 ALTER TABLE `record` DISABLE KEYS */;
-/*!40000 ALTER TABLE `record` ENABLE KEYS */;
+LOCK TABLES `patient` WRITE;
+/*!40000 ALTER TABLE `patient` DISABLE KEYS */;
+/*!40000 ALTER TABLE `patient` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -49,4 +54,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-08-17 16:15:36
+-- Dump completed on 2018-11-13 11:15:32

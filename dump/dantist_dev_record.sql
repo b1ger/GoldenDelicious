@@ -16,29 +16,28 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `material`
+-- Table structure for table `record`
 --
 
-DROP TABLE IF EXISTS `material`;
+DROP TABLE IF EXISTS `record`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `material` (
+CREATE TABLE `record` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `type` varchar(45) DEFAULT NULL,
-  `description` varchar(255) DEFAULT NULL,
-  `price` double DEFAULT NULL,
-  `quantity` int(11) DEFAULT NULL,
+  `doctor_id` bigint(20) NOT NULL,
+  `description` varchar(255) NOT NULL,
+  `card_id` bigint(20) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `material`
+-- Dumping data for table `record`
 --
 
-LOCK TABLES `material` WRITE;
-/*!40000 ALTER TABLE `material` DISABLE KEYS */;
-/*!40000 ALTER TABLE `material` ENABLE KEYS */;
+LOCK TABLES `record` WRITE;
+/*!40000 ALTER TABLE `record` DISABLE KEYS */;
+/*!40000 ALTER TABLE `record` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -50,4 +49,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-08-17 16:15:35
+-- Dump completed on 2018-11-13 11:15:33

@@ -16,31 +16,27 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `service`
+-- Table structure for table `authority`
 --
 
-DROP TABLE IF EXISTS `service`;
+DROP TABLE IF EXISTS `authority`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `service` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `doctor_id` bigint(20) NOT NULL,
-  `type` varchar(45) NOT NULL,
-  `room_id` bigint(20) NOT NULL,
-  `chair_id` bigint(20) NOT NULL,
-  `date` bigint(20) NOT NULL,
-  `record_id` bigint(20) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+CREATE TABLE `authority` (
+  `name` varchar(50) NOT NULL,
+  PRIMARY KEY (`name`),
+  UNIQUE KEY `name_UNIQUE` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `service`
+-- Dumping data for table `authority`
 --
 
-LOCK TABLES `service` WRITE;
-/*!40000 ALTER TABLE `service` DISABLE KEYS */;
-/*!40000 ALTER TABLE `service` ENABLE KEYS */;
+LOCK TABLES `authority` WRITE;
+/*!40000 ALTER TABLE `authority` DISABLE KEYS */;
+INSERT INTO `authority` VALUES ('ROLE_ADMIN');
+/*!40000 ALTER TABLE `authority` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -52,4 +48,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-08-17 16:15:35
+-- Dump completed on 2018-11-13 11:15:33
