@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:include="fragments/header :: header-content">
+    <title id="pageTitle">Users</title>
+</head>
+<body>
+<div class="w-75 mx-auto">
+    <nav th:replace="fragments/navbar :: admin-navbar-content"></nav>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a th:href="@{/admin/index}" href="#">Admin panel</a></li>
+            <li class="breadcrumb-item"><a th:href="@{/admin/user/index}">Users</a></li>
+            <li class="breadcrumb-item active" aria-current="page">View</li>
+        </ol>
+    </nav>
+    <div class="w-50" style="margin: 0 auto;">
+        <a class="btn btn-success" href="#" th:href="@{'/admin/user/' + ${user.getId()} + '/update'}" th:text="Update">Link</a>
+        <a class="btn btn-danger" href="#" th:href="@{'/admin/user/' + ${user.getId()} + '/delete'}" th:text="Delete">Link</a>
+    </div>
+    <table class="table table-striped mt-2 w-50" style="margin: 0 auto;">
+        <thead>
+        <th class="col col-3">Item</th>
+        <th class="col col-9">Value</th>
+        </thead>
+        <tbody>
+        <tr>
+            <td>ID</td>
+            <td th:text="${user.getId()}"></td>
+        </tr>
+        <tr>
+            <td>Image</td>
+            <td class="text-center"><img src="#"
+                     th:src="@{'/staff/' + ${user.getId()} + '/profileimage'}"
+                     height="250">
+            </td>
+        </tr>
+        <tr>
+            <td>Name</td>
+            <td th:text="${user.getFirstName() + ' ' + user.getLastName()}">John Doe</td>
+        </tr>
+        <tr>
+            <td>Username</td>
+            <td th:text="${user.getUserName()}"></td>
+        </tr>
+        <tr>
+            <td>Type</td>
+            <td th:text="${user.getType()}"></td>
+        </tr>
+        <tr>
+            <td>Date creating</td>
+            <td th:text="${#dates.format(user.getCreatedAt(), 'd MMM y')}"></td>
+        </tr>
+        <tr>
+            <td>Date updating</td>
+            <td th:text="${#dates.format(user.getUpdatedAt(), 'd MMM y')}"></td>
+        </tr>
+        <tr>
+            <td>Birth date</td>
+            <td th:text="${user.getBirthDate()}"></td>
+        </tr>
+        <tr>
+            <td>About</td>
+            <td th:text="${user.getAbout()}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div th:include="fragments/footer :: footer-scripts"></div>
+</body>
+</html>

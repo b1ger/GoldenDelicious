@@ -9,65 +9,66 @@
 </head>
 <body>
 <div class="container-fluid">
-    <div class="container-fluid">
-        <div class="w-75 mx-auto">
-            <nav class="navbar navbar-expand-sm navbar-light bg-info">
-                <a class="navbar-brand" href="#">Navbar w/ text</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarText">
-                    <ul class="navbar-nav mr-auto">
-                        <li class="nav-item">
-                            <a class="nav-link text-white" href="#">Menu item #1</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-white" href="#">Menu item #2</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-white" href="#">Menu item #3</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-white" href="#">Menu item #4</a>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
-    <div class="row">
-        <div class="col col-md-8 mx-auto mt-lg-5">
-            <div class="card">
-                <div class="card-header">
-                    <p>New room</p>
-                </div>
-                <div class="card-body">
-                    <form th:object="${room}" th:action="@{'/room/save'} " method="post">
-                        <div class="alert alert-danger text-center"
-                             th:if="${#fields.hasErrors('*')}">
-                            <p>Please Correct Errors Bellow</p>
-                        </div>
-                        <input type="hidden" th:field="*{id}"/>
-                        <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">Description:</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" placeholder="Description" th:field="*{description}">
-                                <span class="help-block" th:if="${#fields.hasErrors('description')}">
+    <div class="w-75 mx-auto">
+        <nav class="navbar navbar-expand-sm navbar-light border-bottom border-top mt-2">
+            <a class="navbar-brand" href="#"><img src="/images/logo.png"></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
+                    aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarText">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link font-weight-bold text-monospace text-uppercase" href="#">Menu item #1</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link font-weight-bold text-monospace text-uppercase" href="#">Menu item #2</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link font-weight-bold text-monospace text-uppercase" href="#">Menu item #3</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link font-weight-bold text-monospace text-uppercase" href="#">Menu item #4</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <div class="row">
+            <div class="col col-md-8 mx-auto mt-lg-5">
+                <div class="card">
+                    <div class="card-header">
+                        <p>New room</p>
+                    </div>
+                    <div class="card-body">
+                        <form th:object="${room}" th:action="@{'/room/save'} " method="post">
+                            <div class="alert alert-danger text-center"
+                                 th:if="${#fields.hasErrors('*')}">
+                                <p>Please Correct Errors Bellow</p>
+                            </div>
+                            <input type="hidden" th:field="*{id}"/>
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">Description:</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" placeholder="Description"
+                                           th:field="*{description}">
+                                    <span class="help-block" th:if="${#fields.hasErrors('description')}">
                                     <ul>
                                         <li th:each="err : ${#fields.errors('description')}" th:text="${err}"></li>
                                     </ul>
                                 </span>
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group row float-right">
-                            <div class="col-sm-10">
-                                <button type="submit" class="btn btn-primary">Save</button>
+                            <div class="form-group row float-right">
+                                <div class="col-sm-10">
+                                    <button type="submit" class="btn btn-primary">Save</button>
+                                </div>
                             </div>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-        </div></div>
 </div>
 </body>
 </html>

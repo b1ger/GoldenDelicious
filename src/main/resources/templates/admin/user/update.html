@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:include="fragments/header :: header-content">
+    <title id="pageTitle">Update User</title>
+</head>
+<body>
+<div class="container-fluid">
+    <div class="w-75 mx-auto">
+        <nav th:replace="fragments/navbar :: admin-navbar-content"></nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a th:href="@{/admin/index}" href="#">Admin panel</a></li>
+            <li class="breadcrumb-item"><a th:href="@{/admin/user/index}" href="#">Users</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Update</li>
+        </ol>
+        <div class="row">
+            <div class="col col-md-8 mx-auto mt-lg-5">
+                <div class="card">
+                    <div class="card-header">
+                        <h2>User update form</h2>
+                    </div>
+                    <div class="card-body">
+                        <form th:object="${user}" th:action="@{'/admin/user/update'} " method="post"
+                              enctype="multipart/form-data">
+                            <div class="alert alert-danger text-center"
+                                 th:if="${#fields.hasErrors('*')}">
+                                <p>Please Correct Errors Bellow</p>
+                            </div>
+                            <input type="hidden" th:field="*{id}"/>
+                            <div class="text-center mb-3">
+                                <img src="#"
+                                     th:src="@{'/staff/' + ${user.getId()} + '/profileimage'}"
+                                     height="250">
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">New image</label>
+                                <div class="col-sm-10">
+                                    <input type="file" id="imageFile" name="imageFile" class="file">
+                                    <span class="help-block" th:if="${#fields.hasErrors('image')}">
+                                    <ul>
+                                        <li th:each="err : ${#fields.errors('image')}" th:text="${err}"></li>
+                                    </ul>
+                                </span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">First name</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" placeholder="First name"
+                                           th:field="*{firstName}">
+                                    <span class="help-block" th:if="${#fields.hasErrors('firstName')}">
+                                    <ul>
+                                        <li th:each="err : ${#fields.errors('firstName')}" th:text="${err}"></li>
+                                    </ul>
+                                </span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">Last name</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" placeholder="Last name"
+                                           th:field="*{lastName}">
+                                    <span class="help-block" th:if="${#fields.hasErrors('lastName')}">
+                                    <ul>
+                                        <li th:each="err : ${#fields.errors('lastName')}" th:text="${err}"></li>
+                                    </ul>
+                                </span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">Birth date</label>
+                                <div class="col-sm-10">
+                                    <input type="date" class="form-control" placeholder="Birth date"
+                                           th:field="*{birthDate}">
+                                    <span class="help-block" th:if="${#fields.hasErrors('birthDate')}">
+                                    <ul>
+                                        <li th:each="err : ${#fields.errors('birthDate')}" th:text="${err}"></li>
+                                    </ul>
+                                </span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">Type</label>
+                                <div class="col-sm-10">
+                                    <select class="form-control" th:field="*{type}">
+                                        <option value=""></option>
+                                        <option th:each="value : ${T(org.ontario.goldendelicious.domain.enums.StaffType).values()}"
+                                                th:value="${value.name()}"
+                                                th:text="${value.name()}">value
+                                        </option>
+                                    </select>
+                                    <span class="help-block" th:if="${#fields.hasErrors('type')}">
+                                    <ul>
+                                        <li th:each="err : ${#fields.errors('type')}" th:text="${err}"></li>
+                                    </ul>
+                                </span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">Username</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" placeholder="Username"
+                                           th:field="*{userName}">
+                                    <span class="help-block" th:if="${#fields.hasErrors('userName')}">
+                                    <ul>
+                                        <li th:each="err : ${#fields.errors('userName')}" th:text="${err}"></li>
+                                    </ul>
+                                </span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">About</label>
+                                <div class="col-sm-10">
+                                    <textarea rows="6" class="form-control" placeholder="About"
+                                              th:field="*{about}"></textarea>
+                                    <span class="help-block" th:if="${#fields.hasErrors('about')}">
+                                    <ul>
+                                        <li th:each="err : ${#fields.errors('about')}" th:text="${err}"></li>
+                                    </ul>
+                                </span>
+                                </div>
+                            </div>
+                            <div class="form-group row float-right">
+                                <div class="col-sm-10">
+                                    <button type="submit" class="btn btn-primary">Save</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<div th:include="fragments/footer :: footer-scripts"></div>
+</body>
+</html>
