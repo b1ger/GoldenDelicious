@@ -173,7 +173,7 @@ public class AdminControllerTest {
         // then
         mockMvc.perform(get("/admin/user/1/update"))
                 .andExpect(status().isOk())
-                .andExpect(model().attributeExists("user"))
+                .andExpect(model().attributeDoesNotExist("user"))
                 .andExpect(view().name("admin/user/update"));
     }
 
@@ -188,7 +188,7 @@ public class AdminControllerTest {
         command.setId(1L);
 
         // when
-        when(staffService.saveStaffCommand(any(), any())).thenReturn(command);
+        when(staffService.updateStaffCommand(any(), any())).thenReturn(command);
 
         // then
         mockMvc.perform(multipart("/admin/user/update").file(multipartFile)
@@ -197,8 +197,6 @@ public class AdminControllerTest {
                 .param("lastName", "Test")
                 .param("userName", "Test")
                 .param("birthDate", "5.10.1889")
-                .param("type", "Test")
-                .param("about", "Test")
         )
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/admin/user/1/view"));

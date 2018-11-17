@@ -106,8 +106,8 @@ public class AdminController {
             return "admin/user/update";
         }
 
-        staffService.updateStaffCommand(user, file);
+        StaffCommand saved = staffService.updateStaffCommand(user, file);
 
-        return "redirect:/admin/user/index";
+        return "redirect:/admin/user/" + saved.getId() + "/view";
     }
 }
