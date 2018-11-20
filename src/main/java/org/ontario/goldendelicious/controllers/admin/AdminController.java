@@ -1,4 +1,4 @@
-package org.ontario.goldendelicious.controllers;
+package org.ontario.goldendelicious.controllers.admin;
 
 import lombok.extern.slf4j.Slf4j;
 import org.ontario.goldendelicious.commands.StaffCommand;
