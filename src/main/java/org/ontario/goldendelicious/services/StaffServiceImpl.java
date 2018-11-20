@@ -14,11 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 @Slf4j
 @Service
@@ -28,7 +24,7 @@ public class StaffServiceImpl implements StaffService {
     private StaffToStaffCommand staffToStaffCommand;
     private StaffCommandToStaff staffCommandToStaff;
 
-    public BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+    private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
     public StaffServiceImpl(
             StaffRepository repository,

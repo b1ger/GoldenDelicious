@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:include="fragments/header :: header-content">
+    <title id="pageTitle">Roles</title>
+</head>
+<body>
+<div class="w-75 mx-auto">
+    <nav th:replace="fragments/navbar :: admin-navbar-content"></nav>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a th:href="@{/admin/index}" href="#">Admin panel</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Roles</li>
+        </ol>
+    </nav>
+    <a class="btn btn-primary float-right mb-3" href="#" th:href="@{/admin/role/create}">Create new</a>
+    <table class="table table-striped mt-2">
+        <thead class="thead-dark">
+
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</div>
+<div th:include="fragments/footer :: footer-scripts"></div>
+</body>
+</html>
