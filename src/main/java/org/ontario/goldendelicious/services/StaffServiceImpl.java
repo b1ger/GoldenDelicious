@@ -5,8 +5,10 @@ import org.ontario.goldendelicious.commands.StaffCommand;
 import org.ontario.goldendelicious.commands.UpdatableStaffCommand;
 import org.ontario.goldendelicious.converters.StaffCommandToStaff;
 import org.ontario.goldendelicious.converters.StaffToStaffCommand;
+import org.ontario.goldendelicious.domain.Authority;
 import org.ontario.goldendelicious.domain.Staff;
 import org.ontario.goldendelicious.exceptions.NotFoundException;
+import org.ontario.goldendelicious.repositories.AuthorityRepository;
 import org.ontario.goldendelicious.repositories.StaffRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -21,6 +23,7 @@ import java.util.*;
 public class StaffServiceImpl implements StaffService {
 
     private StaffRepository repository;
+    private AuthorityRepository authorityRepository;
     private StaffToStaffCommand staffToStaffCommand;
     private StaffCommandToStaff staffCommandToStaff;
 
@@ -28,10 +31,12 @@ public class StaffServiceImpl implements StaffService {
 
     public StaffServiceImpl(
             StaffRepository repository,
+            AuthorityRepository authorityRepository,
             StaffToStaffCommand staffToStaffCommand,
             StaffCommandToStaff staffCommandToStaff
     ) {
         this.repository = repository;
+        this.authorityRepository = authorityRepository;
         this.staffToStaffCommand = staffToStaffCommand;
         this.staffCommandToStaff = staffCommandToStaff;
     }
@@ -70,6 +75,9 @@ public class StaffServiceImpl implements StaffService {
         command.setUpdatedAt(command.getCreatedAt());
         encoder = new BCryptPasswordEncoder();
         command.setPassword(encoder.encode(command.getPassword()));
+
+        Optional<Authority> optional = authorityRepository.findByName("ROLE_USER_DEFAULT");
+        optional.ifPresent(authority -> command.getAuthorities().add(authority));
         Staff detached = staffCommandToStaff.convert(command);
 
         Staff saved = repository.save(detached);
@@ -86,7 +94,7 @@ public class StaffServiceImpl implements StaffService {
         if (updatable.getPassword() != null) {
             user.setPassword(encoder.encode(updatable.getPassword()));
         }
-        if (imageFile.getBytes().length > 0) {
+        if (imageFile!= null && imageFile.getBytes().length > 0) {
             user.setImage(getBytesFromFile(imageFile));
         }
         Date date = new Date();
@@ -142,6 +150,7 @@ public class StaffServiceImpl implements StaffService {
         updatable.setType(command.getType());
         updatable.setImage(command.getImage());
         updatable.setAbout(command.getAbout());
+        updatable.setAuthorities(command.getAuthorities());
 
         return updatable;
     }
@@ -154,6 +163,7 @@ public class StaffServiceImpl implements StaffService {
         command.setType(updatable.getType());
         command.setAbout(updatable.getAbout());
         command.setBirthDate(updatable.getBirthDate());
+        command.setAuthorities(updatable.getAuthorities());
 
         return command;
     }

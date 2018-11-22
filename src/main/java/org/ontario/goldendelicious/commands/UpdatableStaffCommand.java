@@ -4,9 +4,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.ontario.goldendelicious.domain.Authority;
 import org.ontario.goldendelicious.domain.enums.StaffType;
 
 import javax.validation.constraints.NotBlank;
+import java.util.HashSet;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -27,4 +30,5 @@ public class UpdatableStaffCommand {
     private Byte[] image;
     private String about;
     private String password;
+    private Set<Authority> authorities = new HashSet<>();
 }

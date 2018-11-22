@@ -3,7 +3,6 @@ package org.ontario.goldendelicious.controllers;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.ontario.goldendelicious.controllers.LoginController;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 

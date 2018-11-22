@@ -3,7 +3,9 @@ package org.ontario.goldendelicious.controllers.admin;
 import lombok.extern.slf4j.Slf4j;
 import org.ontario.goldendelicious.commands.StaffCommand;
 import org.ontario.goldendelicious.commands.UpdatableStaffCommand;
+import org.ontario.goldendelicious.domain.Authority;
 import org.ontario.goldendelicious.domain.Staff;
+import org.ontario.goldendelicious.services.AuthorityService;
 import org.ontario.goldendelicious.services.StaffService;
 import org.ontario.goldendelicious.services.StaffServiceImpl;
 import org.springframework.stereotype.Controller;
@@ -18,16 +20,20 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Slf4j
 @RequestMapping("/admin")
 @Controller
-public class AdminController {
+public class UserController {
 
     private StaffService staffService;
+    private AuthorityService authorityService;
 
-    public AdminController(StaffServiceImpl staffService) {
+    public UserController(StaffServiceImpl staffService, AuthorityService authorityService) {
         this.staffService = staffService;
+        this.authorityService = authorityService;
     }
 
     @RequestMapping("/index")
@@ -72,7 +78,16 @@ public class AdminController {
     @RequestMapping("/user/{id}/view")
     public String viewAction(@PathVariable("id") String id, Model model) {
         StaffCommand user = staffService.findStaffCommandById(Long.valueOf(id));
+        List<Authority> authorities = authorityService.getAuthorityList();
+        Set<String> ids = user.getAuthorities().stream()
+                .map(Authority::getName)
+                .collect(Collectors.toSet());
+        List<Authority> availableAuthorities = authorities.stream()
+                .filter(authority -> !ids.contains(authority.getName()))
+                .collect(Collectors.toList());
+
         model.addAttribute("user", user);
+        model.addAttribute("availableAuthorities", availableAuthorities);
 
         return "admin/user/view";
     }
@@ -107,6 +122,7 @@ public class AdminController {
         }
 
         StaffCommand saved = staffService.updateStaffCommand(user, file);
+        log.debug("Update user with id: " + saved.getId());
 
         return "redirect:/admin/user/" + saved.getId() + "/view";
     }
