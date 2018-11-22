@@ -41,7 +41,6 @@ public class RoomControllerTest {
 
     @Test
     public void saveAction() throws Exception {
-
         // given
         RoomCommand command = new RoomCommand();
         command.setId(3L);
@@ -58,5 +57,21 @@ public class RoomControllerTest {
                 )
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/index"));
+    }
+
+    @Test
+    public void shouldFailAfterValidation() throws Exception {
+        // given
+        RoomCommand command = new RoomCommand();
+
+        //when
+        when(roomService.saveRoomCommand(any())).thenReturn(command);
+
+        // then
+        mockMvc.perform(post("/room/save")
+                    .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                )
+                .andExpect(status().isOk())
+                .andExpect(view().name("room/roomform"));
     }
 }

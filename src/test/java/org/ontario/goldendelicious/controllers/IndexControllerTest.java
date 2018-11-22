@@ -1,7 +1,6 @@
 package org.ontario.goldendelicious.controllers;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -16,12 +15,11 @@ public class IndexControllerTest {
     private MockMvc mockMvc;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         this.controller = new IndexController();
         this.mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
     }
 
-    //@Ignore("Use Spring Security loginSuccessfulUrl")
     @Test
     public void indexAction() throws Exception {
 

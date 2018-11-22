@@ -11,6 +11,7 @@ import org.ontario.goldendelicious.converters.StaffToStaffCommand;
 import org.ontario.goldendelicious.domain.Staff;
 import org.ontario.goldendelicious.domain.enums.StaffType;
 import org.ontario.goldendelicious.exceptions.NotFoundException;
+import org.ontario.goldendelicious.repositories.AuthorityRepository;
 import org.ontario.goldendelicious.repositories.StaffRepository;
 import org.springframework.mock.web.MockMultipartFile;
 
@@ -28,6 +29,9 @@ public class StaffServiceImplTest {
     private StaffRepository repository;
 
     @Mock
+    private AuthorityRepository authorityRepository;
+
+    @Mock
     private StaffToStaffCommand staffToStaffCommand;
 
     @Mock
@@ -36,7 +40,7 @@ public class StaffServiceImplTest {
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
-        staffService = new StaffServiceImpl(repository, staffToStaffCommand, staffCommandToStaff);
+        staffService = new StaffServiceImpl(repository, authorityRepository, staffToStaffCommand, staffCommandToStaff);
     }
 
     @Test

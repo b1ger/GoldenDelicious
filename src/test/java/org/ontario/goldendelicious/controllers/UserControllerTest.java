@@ -6,12 +6,17 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.ontario.goldendelicious.commands.StaffCommand;
 import org.ontario.goldendelicious.commands.UpdatableStaffCommand;
-import org.ontario.goldendelicious.controllers.admin.AdminController;
+import org.ontario.goldendelicious.controllers.admin.UserController;
+import org.ontario.goldendelicious.domain.Authority;
 import org.ontario.goldendelicious.exceptions.NotFoundException;
+import org.ontario.goldendelicious.services.AuthorityServiceImpl;
 import org.ontario.goldendelicious.services.StaffServiceImpl;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
@@ -20,19 +25,22 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-public class AdminControllerTest {
+public class UserControllerTest {
 
-    private AdminController adminController;
+    private UserController userController;
     private MockMvc mockMvc;
 
     @Mock
     private StaffServiceImpl staffService;
 
+    @Mock
+    private AuthorityServiceImpl authorityService;
+
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        this.adminController = new AdminController(staffService);
-        mockMvc = MockMvcBuilders.standaloneSetup(adminController).setControllerAdvice(new ExceptionHandlerController()).build();
+        this.userController = new UserController(staffService, authorityService);
+        mockMvc = MockMvcBuilders.standaloneSetup(userController).setControllerAdvice(new ExceptionHandlerController()).build();
     }
 
     @Test
@@ -113,14 +121,22 @@ public class AdminControllerTest {
         // given
         StaffCommand user = new StaffCommand();
         user.setId(1L);
+        List<Authority> allAuthorities = new ArrayList<>();
+        Authority authority1 = new Authority("ROLE_TEST1", "DESCRIPTION_TEST1");
+        Authority authority2 = new Authority("ROLE_TEST2", "DESCRIPTION_TEST2");
+        user.getAuthorities().add(authority1);
+        allAuthorities.add(authority1);
+        allAuthorities.add(authority2);
 
         // when
         when(staffService.findStaffCommandById(anyLong())).thenReturn(user);
+        when(authorityService.getAuthorityList()).thenReturn(allAuthorities);
 
         // then
         mockMvc.perform(get("/admin/user/1/view"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("admin/user/view"))
+                .andExpect(model().attributeExists("availableAuthorities"))
                 .andExpect(model().attributeExists("user"));
 
         verify(staffService, times(1)).findStaffCommandById(1L);
@@ -136,8 +152,6 @@ public class AdminControllerTest {
 
         verify(staffService, times(1)).deleteById(anyLong());
     }
-
-
 
     @Test
     public void shouldHandleBadRequest() throws Exception {
@@ -198,5 +212,27 @@ public class AdminControllerTest {
         )
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/admin/user/1/view"));
+    }
+
+    @Test
+    public void formShouldNotValidateAfterUpdate() throws Exception {
+        // given
+        StaffCommand command = new StaffCommand();
+        UpdatableStaffCommand updatable = mock(UpdatableStaffCommand.class);
+        updatable.setId(1L);
+        MockMultipartFile multipartFile =
+                new MockMultipartFile("imageFile", "testing.txt", "text/plain", "Hello World from SpringBoot".getBytes());
+        command.setId(1L);
+
+        // when
+        when(staffService.updateStaffCommand(any(), any())).thenReturn(command);
+
+        // then
+        mockMvc.perform(multipart("/admin/user/update").file(multipartFile)
+                .param("id", "1")
+                .param("firstName", "Test")
+        )
+                .andExpect(status().isOk())
+                .andExpect(view().name("admin/user/update"));
     }
 }

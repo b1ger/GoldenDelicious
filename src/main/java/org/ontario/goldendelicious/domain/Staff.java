@@ -7,11 +7,8 @@ import lombok.ToString;
 import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.Type;
 import org.ontario.goldendelicious.domain.enums.StaffType;
-import org.springframework.beans.factory.annotation.Required;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 

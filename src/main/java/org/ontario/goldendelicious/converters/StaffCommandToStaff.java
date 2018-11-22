@@ -9,8 +9,8 @@ import org.springframework.stereotype.Component;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 @Component
 public class StaffCommandToStaff implements Converter<StaffCommand, Staff> {
@@ -28,10 +28,9 @@ public class StaffCommandToStaff implements Converter<StaffCommand, Staff> {
         staff.setImage(source.getImage());
         staff.setFirstName(source.getFirstName());
         staff.setLastName(source.getLastName());
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("d MMM y", Locale.ENGLISH);
         try {
             Date date = dateFormat.parse(source.getBirthDate());
-            System.out.println(date);
             staff.setBirthDate(date.getTime());
         } catch (ParseException e) {
             e.printStackTrace();

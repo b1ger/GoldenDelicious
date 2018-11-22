@@ -72,4 +72,18 @@ public class ChairControllerTest {
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/index"));
     }
+
+    @Test
+    public void shouldFilAfterValidation() throws Exception {
+        ChairCommand command = new ChairCommand();
+
+        when(chairService.saveChairCommand(any())).thenReturn(command);
+
+        mockMvc.perform(post("/chair/save")
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                .param("id", "1")
+        )
+                .andExpect(status().isOk())
+                .andExpect(view().name("chair/chairform"));
+    }
 }

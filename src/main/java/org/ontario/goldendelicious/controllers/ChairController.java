@@ -54,8 +54,8 @@ public class ChairController {
             return CHAIR_CHAIRFORM_URL;
         }
 
-        //ChairCommand savedCommand = chairService.saveChairCommand(chairCommand);
-        //log.debug("Saved chair id:" + savedCommand.getId());
+        ChairCommand savedCommand = chairService.saveChairCommand(chairCommand);
+        log.debug("Saved chair id: " + savedCommand.getId());
 
         return "redirect:/index";
     }
