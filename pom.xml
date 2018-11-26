@@ -89,28 +89,7 @@
                     <addResources>true</addResources>
                 </configuration>
             </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-failsafe-plugin</artifactId>
-                <version>3.0.0-M1</version>
-                <configuration>
-                    <includes>
-                        <include>**/*IT.java</include>
-                    </includes>
-                    <additionalClasspathElements>
-                        <additionalClasspathElement>${basedir}/target/classes</additionalClasspathElement>
-                    </additionalClasspathElements>
-                    <argLine>-Xmx1024m -XX:MaxPermSize=256m</argLine>
-                </configuration>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>integration-test</goal>
-                            <goal>verify</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
+           
         </plugins>
     </build>
 
