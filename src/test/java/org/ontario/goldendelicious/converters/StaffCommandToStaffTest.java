@@ -43,7 +43,7 @@ public class StaffCommandToStaffTest {
         command.setUserName(USERNAME);
         command.setPassword(PASS_HASH);
         command.setImage(IMAGE);
-        command.setBirthDate("1990-11-12");
+        command.setBirthDate("10 Dec 1912");
 
         assertNotNull(converter.convert(command));
     }
@@ -61,7 +61,7 @@ public class StaffCommandToStaffTest {
         command.setUserName(USERNAME);
         command.setPassword(PASS_HASH);
         command.setImage(IMAGE);
-        command.setBirthDate("1990-11-12");
+        command.setBirthDate("10 Dec 1912");
 
         //when
         Staff staff = converter.convert(command);
