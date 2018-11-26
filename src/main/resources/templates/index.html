@@ -7,7 +7,7 @@
 <body>
 <div class="w-75 mx-auto">
     <nav th:replace="fragments/navbar :: navbar-content"></nav>
-    <h1>Index page</h1>
+    <h1 th:utext="${#authentication.name}">Index page</h1>
     <div th:include="fragments/footer :: footer-scripts"></div>
 </div>
 </body>
