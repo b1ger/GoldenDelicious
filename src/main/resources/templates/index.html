@@ -11,4 +11,71 @@
     <div th:include="fragments/footer :: footer-scripts"></div>
 </div>
 </body>
+<!-- Modal -->
+<div class="modal fade" id="doRequest" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form th:action="@{'/index/request'}" th:method="POST">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Send new request</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="firstName">First name</label>
+                        <input class="form-control" type="text" id="firstName" placeholder="First Name" required
+                        th:field="${request.firstName}">
+                    </div>
+                    <div class="form-group">
+                        <label for="lastName">Last name</label>
+                        <input class="form-control" type="text" id="lastName" placeholder="Last Name" required
+                        th:field="${request.lastName}">
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone</label>
+                        <input class="form-control" type="tel" id="phone" pattern="^([\d]{3}-[\d]{3}-[\d]{2}-[\d]{2})$" placeholder="067-111-22-77" required
+                        th:field="${request.phone}">
+                    </div>
+                    <div class="form-group">
+                        <label for="service">Choose service</label>
+                        <select class="form-control" id="service" th:field="${request.serviceType}">
+                            <option th:each="value : ${T(org.ontario.goldendelicious.domain.enums.ServiceType).values()}"
+                                    th:value="${value.name()}"
+                                    th:text="${value.name()}">value
+                            </option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="doctor">Choose doctor</label>
+                        <select class="form-control" id="doctor" th:field="${request.doctorId}">
+                            <option th:each="doctor : ${doctors}"
+                            th:value="${doctor.getId()}"
+                            th:text="${doctor.getFirstName() + ' ' + doctor.getLastName()}"></option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="date">Choose date</label>
+                        <input class="form-control" type="date" id="date" required
+                        th:fieald="${request.date}">
+                    </div>
+                    <div class="form-group">
+                        <label for="time">Choose time</label>
+                        <select class="form-control" id="time">
+                            <option value="9:00">9:00</option>
+                            <option value="11:00">11:00</option>
+                            <option value="13:00">13:00</option>
+                            <option value="15:00">15:00</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-outline-success">Send</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 </html>

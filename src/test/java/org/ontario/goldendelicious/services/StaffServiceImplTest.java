@@ -16,8 +16,12 @@ import org.ontario.goldendelicious.repositories.StaffRepository;
 import org.springframework.mock.web.MockMultipartFile;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
+import static org.hamcrest.Matchers.arrayContaining;
+import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
@@ -203,5 +207,23 @@ public class StaffServiceImplTest {
 
         // then
         assertEquals(updatableStaffCommand.getUserName(), command.getUserName());
+    }
+
+    @Test
+    public void shouldReturnOnlyDoctors() {
+        Staff doctor = new Staff();
+        doctor.setId(1L);
+        doctor.setType(StaffType.DOCTOR);
+        Staff anotherDoctor = new Staff();
+        anotherDoctor.setId(2L);
+        anotherDoctor.setType(StaffType.DOCTOR);
+        List<Staff> doctors = new ArrayList<>();
+        doctors.add(doctor);
+        doctors.add(anotherDoctor);
+
+        when(repository.findByTypeOrderById(StaffType.DOCTOR)).thenReturn(doctors);
+        List<Staff> returnedList = staffService.getDoctors();
+
+        assertThat(returnedList.toArray(), arrayContaining(doctor, anotherDoctor));
     }
 }
