@@ -7,6 +7,7 @@ import org.ontario.goldendelicious.converters.StaffCommandToStaff;
 import org.ontario.goldendelicious.converters.StaffToStaffCommand;
 import org.ontario.goldendelicious.domain.Authority;
 import org.ontario.goldendelicious.domain.Staff;
+import org.ontario.goldendelicious.domain.enums.StaffType;
 import org.ontario.goldendelicious.exceptions.NotFoundException;
 import org.ontario.goldendelicious.repositories.AuthorityRepository;
 import org.ontario.goldendelicious.repositories.StaffRepository;
@@ -44,6 +45,15 @@ public class StaffServiceImpl implements StaffService {
     @Override
     public List<Staff> getStaffList() {
         return repository.findAllByOrderById();
+    }
+
+    @Override
+    public List<Staff> findByType(StaffType type) {
+        return repository.findByTypeOrderById(type);
+    }
+
+    public List<Staff> getDoctors() {
+        return findByType(StaffType.DOCTOR);
     }
 
     @Override

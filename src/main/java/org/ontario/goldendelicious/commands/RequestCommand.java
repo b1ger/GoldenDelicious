@@ -11,10 +11,12 @@ import org.ontario.goldendelicious.domain.enums.ServiceType;
 @NoArgsConstructor
 public class RequestCommand {
 
-    private Long id;
     private String firstName;
     private String lastName;
+    private String phone;
     private ServiceType serviceType;
     private Long doctorId;
+    private String date;
+    private String time;
     private RequestStatus status;
 }
