@@ -11,6 +11,8 @@
     <div th:include="fragments/footer :: footer-scripts"></div>
 </div>
 </body>
+
+
 <!-- Modal -->
 <div class="modal fade" id="doRequest" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -58,7 +60,9 @@
                     <div class="form-group">
                         <label for="date">Choose date</label>
                         <input class="form-control" type="date" id="date" required
-                        th:fieald="${request.date}">
+                        th:fieald="${request.date}"
+                        th:min="${#dates.format(#dates.createToday(), 'YYY-MM-dd')}"
+                        th:max="${#dates.format(#dates.create(#dates.createToday().getYear() + 1900, #dates.createToday().getMonth() + 1, #dates.createNow().getDate() + 7), 'YYYY-MM-dd')}">
                     </div>
                     <div class="form-group">
                         <label for="time">Choose time</label>

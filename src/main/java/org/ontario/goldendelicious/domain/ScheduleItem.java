@@ -6,14 +6,13 @@ import lombok.Setter;
 import org.ontario.goldendelicious.domain.enums.ServiceType;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
-public class Service {
+@Table(name = "schedule")
+public class ScheduleItem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,20 +23,11 @@ public class Service {
     private Long patientId;
 
     @Enumerated(value = EnumType.STRING)
-    private ServiceType type;
+    private ServiceType serviceType;
+
+    private Long time;
 
     private Long roomId;
 
     private Long chairId;
-
-    private Long date;
-
-    @ManyToMany
-    @JoinTable(name = "service_material",
-            joinColumns = @JoinColumn(name = "service_id"),
-            inverseJoinColumns = @JoinColumn(name = "material_id"))
-    private Set<Material> materials = new HashSet<>();
-
-    @ManyToOne
-    private Record record;
 }

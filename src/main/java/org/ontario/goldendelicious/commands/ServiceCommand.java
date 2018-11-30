@@ -15,6 +15,7 @@ public class ServiceCommand {
 
     private Long id;
     private Long doctorId;
+    private Long patientId;
     private ServiceType type;
     private Long roomId;
     private Long chairId;

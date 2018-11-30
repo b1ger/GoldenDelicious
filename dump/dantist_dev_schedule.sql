@@ -16,30 +16,32 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `authority`
+-- Table structure for table `schedule`
 --
 
-DROP TABLE IF EXISTS `authority`;
+DROP TABLE IF EXISTS `schedule`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `authority` (
+CREATE TABLE `schedule` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `name` varchar(45) NOT NULL,
-  `description` varchar(255) DEFAULT NULL,
+  `doctor_id` bigint(20) NOT NULL,
+  `patient_id` bigint(20) NOT NULL,
+  `service_type` varchar(45) NOT NULL,
+  `time` bigint(20) NOT NULL,
+  `room_id` bigint(20) NOT NULL,
+  `chair_id` bigint(20) NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `id_UNIQUE` (`id`),
-  UNIQUE KEY `name_UNIQUE` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+  UNIQUE KEY `id_UNIQUE` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `authority`
+-- Dumping data for table `schedule`
 --
 
-LOCK TABLES `authority` WRITE;
-/*!40000 ALTER TABLE `authority` DISABLE KEYS */;
-INSERT INTO `authority` VALUES (1,'ROLE_ADMIN','Main role with all permissions'),(2,'ROLE_USER_DEFAULT','Default user\'s role with basic permissions');
-/*!40000 ALTER TABLE `authority` ENABLE KEYS */;
+LOCK TABLES `schedule` WRITE;
+/*!40000 ALTER TABLE `schedule` DISABLE KEYS */;
+/*!40000 ALTER TABLE `schedule` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
