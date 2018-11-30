@@ -30,6 +30,7 @@ CREATE TABLE `service` (
   `chair_id` bigint(20) NOT NULL,
   `date` bigint(20) NOT NULL,
   `record_id` bigint(20) DEFAULT NULL,
+  `patient_id` bigint(20) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -52,4 +53,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-11-23 15:34:16
+-- Dump completed on 2018-11-30 16:19:34
