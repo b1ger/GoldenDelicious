@@ -2,6 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments/header :: header-content">
     <title id="pageTitle">GD</title>
+
 </head>
 
 <body>
@@ -41,6 +42,11 @@
                         th:field="${request.phone}">
                     </div>
                     <div class="form-group">
+                        <label for="phone">Email</label>
+                        <input class="form-control" type="email" id="email" placeholder="example@mail.com" required
+                        th:field="${request.email}">
+                    </div>
+                    <div class="form-group">
                         <label for="service">Choose service</label>
                         <select class="form-control" id="service" th:field="${request.serviceType}">
                             <option th:each="value : ${T(org.ontario.goldendelicious.domain.enums.ServiceType).values()}"
@@ -60,13 +66,13 @@
                     <div class="form-group">
                         <label for="date">Choose date</label>
                         <input class="form-control" type="date" id="date" required
-                        th:fieald="${request.date}"
+                        th:field="${request.date}"
                         th:min="${#dates.format(#dates.createToday(), 'YYY-MM-dd')}"
                         th:max="${#dates.format(#dates.create(#dates.createToday().getYear() + 1900, #dates.createToday().getMonth() + 1, #dates.createNow().getDate() + 7), 'YYYY-MM-dd')}">
                     </div>
                     <div class="form-group">
                         <label for="time">Choose time</label>
-                        <select class="form-control" id="time">
+                        <select class="form-control" id="time" th:field="${request.time}">
                             <option value="9:00">9:00</option>
                             <option value="11:00">11:00</option>
                             <option value="13:00">13:00</option>
@@ -82,4 +88,37 @@
         </div>
     </div>
 </div>
+<script type="text/javascript">
+    var doctorId;
+    var date;
+    var times = [];
+
+    $( "#date" ).change(function () {
+        doctorId = $( "#doctor" ).val();
+        date = $( "#date" ).val();
+        $.ajax({
+            type: "POST",
+            url: "/staff/free-time",
+            dataType: "json",
+            data: {
+                doctorId: doctorId,
+                date: date
+            },
+
+            success: function (data) {
+                if (data.status === "success") {
+                    // times = data.times;
+                    // times.forEach(function(item, i, arr) {
+                    //     $( "#time" ).append($("<option value='" + item + "'>" + item + "</option>"));
+                    // });
+                    alert("Status: " + data.status);
+                }
+            },
+
+            error: function (data) {
+                alert("Message: " + data.toString())
+            }
+        });
+    })
+</script>
 </html>
