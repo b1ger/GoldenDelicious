@@ -4,16 +4,18 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.ontario.goldendelicious.commands.StaffCommand;
 import org.ontario.goldendelicious.services.StaffService;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @Controller
@@ -74,5 +76,24 @@ public class StaffController {
             InputStream is = new ByteArrayInputStream(byteArray);
             IOUtils.copy(is, response.getOutputStream());
         }
+    }
+
+    @RequestMapping(
+            value = "/staff/free-time",
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody Map<String, Object> getFreeTime(@RequestParam String doctorId,
+                                                         @RequestParam String date
+    ) {
+
+        log.debug("Param from ajax: doctorId = {}", doctorId);
+        log.debug("Param from ajax: date = {}", date);
+
+        String[] allTimes = {"9:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00"};
+
+        //TODO
+        Map<String, Object> map = new HashMap<>();
+        map.put("status", "success");
+
+        return map;
     }
 }

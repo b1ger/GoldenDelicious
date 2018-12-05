@@ -35,6 +35,8 @@ public class Patient {
 
     private String address;
 
+    private String email;
+
     @OneToOne
     private PatientCard card;
 }

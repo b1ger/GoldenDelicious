@@ -21,7 +21,6 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.hamcrest.Matchers.arrayContaining;
-import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 

@@ -6,9 +6,6 @@ import org.ontario.goldendelicious.commands.StaffCommand;
 import org.ontario.goldendelicious.domain.Staff;
 import org.ontario.goldendelicious.domain.enums.StaffType;
 
-import java.util.Calendar;
-import java.util.Date;
-
 import static org.junit.Assert.*;
 
 public class StaffToStaffCommandTest {
@@ -35,7 +32,7 @@ public class StaffToStaffCommandTest {
     }
 
     @Test
-    public void testEmptyObject() throws Exception {
+    public void testEmptyObject() {
         Staff staff = new Staff();
         staff.setId(ID_VALUE);
         staff.setFirstName(FIRS_NAME);
@@ -73,5 +70,6 @@ public class StaffToStaffCommandTest {
         assertEquals(ID_VALUE, command.getId());
         assertEquals(USERNAME, command.getUserName());
         assertArrayEquals(IMAGE, command.getImage());
+        assertEquals("27 Jun 1990", command.getBirthDate());
     }
 }
