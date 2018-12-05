@@ -3,6 +3,7 @@ package org.ontario.goldendelicious.domain;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 import org.ontario.goldendelicious.domain.enums.RequestStatus;
 import org.ontario.goldendelicious.domain.enums.ServiceType;
 
@@ -13,6 +14,7 @@ import java.util.Date;
 @Getter
 @Setter
 @NoArgsConstructor
+@ToString
 public class Request {
 
     @Id
@@ -25,12 +27,14 @@ public class Request {
 
     private String phone;
 
+    private String email;
+
     @Enumerated(value = EnumType.STRING)
     private ServiceType serviceType;
 
     private Long doctorId;
 
-    private Date date;
+    private Long date;
 
     private String time;
 
