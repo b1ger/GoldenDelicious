@@ -16,6 +16,8 @@ public class PatientCommand {
     private Integer age;
     private Long createdAt;
     private Long updatedAt;
+    private String phone;
     private String address;
+    private String email;
     private PatientCardCommand card;
 }

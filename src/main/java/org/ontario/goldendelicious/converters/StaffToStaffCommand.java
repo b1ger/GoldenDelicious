@@ -7,8 +7,9 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.util.Date;
 import java.util.Locale;
 
 @Component
@@ -27,9 +28,9 @@ public class StaffToStaffCommand implements Converter<Staff, StaffCommand> {
         command.setImage(source.getImage());
         command.setFirstName(source.getFirstName());
         command.setLastName(source.getLastName());
-        DateFormat format = new SimpleDateFormat("d MMM y", Locale.ENGLISH);
-        String date = format.format(source.getBirthDate());
-        command.setBirthDate(date);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("d MMM y", Locale.ENGLISH);
+        Date date = Date.from(Instant.ofEpochSecond(source.getBirthDate()));
+        command.setBirthDate(dateFormat.format(date));
         command.setUserName(source.getUserName());
         command.setType(source.getType());
         command.setPassword(source.getPassword());

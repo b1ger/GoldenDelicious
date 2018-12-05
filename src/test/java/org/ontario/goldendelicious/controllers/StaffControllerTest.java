@@ -7,6 +7,7 @@ import org.mockito.MockitoAnnotations;
 import org.ontario.goldendelicious.commands.StaffCommand;
 import org.ontario.goldendelicious.repositories.StaffRepository;
 import org.ontario.goldendelicious.services.StaffServiceImpl;
+import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -15,6 +16,7 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 public class StaffControllerTest {
@@ -109,5 +111,17 @@ public class StaffControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("staff"))
                 .andExpect(view().name("staff/stafform"));
+    }
+
+    @Test
+    public void shouldReturnScheduleOfDoctor() throws Exception {
+
+        mockMvc.perform(post("/staff/free-time")
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .param("doctorId", "100500")
+                .param("date", "10-11-1995")
+        )
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8));
     }
 }
