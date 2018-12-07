@@ -32,7 +32,7 @@ public class RequestCommandToRequest implements Converter<RequestCommand, Reques
         request.setDoctorId(source.getDoctorId());
         request.setServiceType(source.getServiceType());
         request.setStatus(source.getStatus());
-        SimpleDateFormat dateFormat = new SimpleDateFormat("d MMM y", Locale.ENGLISH);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
         try {
             Date date = dateFormat.parse(source.getDate());
             request.setDate(date.getTime());

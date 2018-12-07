@@ -97,7 +97,6 @@ public class IndexControllerTest {
                 .param("firstName", "FirstName")
                 .param("lastName", "LastName")
         )
-                .andExpect(status().isOk())
-                .andExpect(view().name("index"));
+                .andExpect(status().isOk());
     }
 }

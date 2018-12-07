@@ -5,8 +5,12 @@ import org.ontario.goldendelicious.commands.RequestCommand;
 import org.ontario.goldendelicious.converters.RequestCommandToRequest;
 import org.ontario.goldendelicious.converters.RequestToRequestCommand;
 import org.ontario.goldendelicious.domain.Request;
+import org.ontario.goldendelicious.domain.enums.RequestStatus;
 import org.ontario.goldendelicious.repositories.RequestRepository;
 import org.springframework.stereotype.Service;
+
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -31,5 +35,13 @@ public class RequestServiceImpl implements RequestService {
         Request detached = requestCommandToRequest.convert(requestCommand);
         assert detached != null;
         return requestRepository.save(detached);
+    }
+
+    @Override
+    public Set<RequestCommand> fetchByStatus(RequestStatus status) {
+        return requestRepository.getAllByStatusOrderByDate(status)
+                .stream()
+                .map(request -> requestToRequestCommand.convert(request))
+                .collect(Collectors.toSet());
     }
 }

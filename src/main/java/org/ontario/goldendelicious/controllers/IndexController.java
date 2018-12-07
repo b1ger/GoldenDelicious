@@ -2,6 +2,7 @@ package org.ontario.goldendelicious.controllers;
 
 import lombok.extern.slf4j.Slf4j;
 import org.ontario.goldendelicious.commands.RequestCommand;
+import org.ontario.goldendelicious.domain.enums.RequestStatus;
 import org.ontario.goldendelicious.services.RequestServiceImpl;
 import org.ontario.goldendelicious.services.StaffServiceImpl;
 import org.springframework.stereotype.Controller;
@@ -52,7 +53,7 @@ public class IndexController {
 
             log.debug("Request has errors, and wasn't saved: " + request);
         }
-
+        request.setStatus(RequestStatus.NEW);
         requestService.save(request);
     }
 }
