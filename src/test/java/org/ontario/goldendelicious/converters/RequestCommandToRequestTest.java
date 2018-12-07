@@ -21,7 +21,7 @@ public class RequestCommandToRequestTest {
     private static final String EMAIL = "exqmple@test.com";
     private static final ServiceType SERVICE_TYPE = ServiceType.SERVICE_1;
     private static final Long DOCTOR_ID = 2L;
-    private static final String DATE = "4 DEC 2018";
+    private static final String DATE = "2018-12-04";
     private static final String TIME = "9:00";
     private static final RequestStatus REQUEST_STATUS = RequestStatus.NEW;
 
