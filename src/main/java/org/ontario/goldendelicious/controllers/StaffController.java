@@ -2,7 +2,11 @@ package org.ontario.goldendelicious.controllers;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
+import org.ontario.goldendelicious.Utils.StaffUtils;
 import org.ontario.goldendelicious.commands.StaffCommand;
+import org.ontario.goldendelicious.domain.Request;
+import org.ontario.goldendelicious.exceptions.ConvertionException;
+import org.ontario.goldendelicious.services.RequestService;
 import org.ontario.goldendelicious.services.StaffService;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -13,19 +17,24 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Slf4j
 @Controller
 public class StaffController {
 
     private StaffService staffService;
-    private final String STAFF_STAFFFORM_URL = "staff/stafform";
+    private RequestService requestService;
+    private final String STAFF_STAFFORM_URL = "staff/stafform";
 
-    public StaffController(StaffService staffService) {
+    public StaffController(
+            StaffService staffService,
+            RequestService requestService
+    ) {
         this.staffService = staffService;
+        this.requestService = requestService;
     }
 
     @GetMapping("/staff/index")
@@ -41,7 +50,7 @@ public class StaffController {
         StaffCommand staffCommand = new StaffCommand();
         model.addAttribute("staff", staffCommand);
 
-        return STAFF_STAFFFORM_URL;
+        return STAFF_STAFFORM_URL;
     }
 
     @GetMapping("/staff/{id}/view")
@@ -57,7 +66,7 @@ public class StaffController {
         StaffCommand command = staffService.findStaffCommandById(Long.valueOf(id));
         model.addAttribute("staff", command);
 
-        return STAFF_STAFFFORM_URL;
+        return STAFF_STAFFORM_URL;
     }
 
     @GetMapping("/staff/{id}/profileimage")
@@ -85,14 +94,22 @@ public class StaffController {
                                                          @RequestParam String date
     ) {
 
-        log.debug("Param from ajax: doctorId = {}", doctorId);
-        log.debug("Param from ajax: date = {}", date);
+        log.debug("Param from request form ajax: doctorId = {}", doctorId);
+        log.debug("Param from request form ajax: date = {}", date);
 
-        String[] allTimes = {"9:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00"};
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+        Date dateObject;
+        try {
+            dateObject = dateFormat.parse(date);
+        } catch (ParseException e) {
+            throw new ConvertionException("Convertion RequestCommand to Request was failed: " + e.getMessage());
+        }
+        Set<Request> requestSet =  requestService.fetchByDateAndDoctor(dateObject.getTime(), Long.valueOf(doctorId));
+        String[] availableTime = StaffUtils.getAvailableTime(requestSet);
 
-        //TODO
         Map<String, Object> map = new HashMap<>();
         map.put("status", "success");
+        map.put("times", availableTime);
 
         return map;
     }

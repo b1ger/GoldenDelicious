@@ -10,4 +10,5 @@ public interface RequestService {
 
     Request save(RequestCommand request);
     Set<RequestCommand> fetchByStatus(RequestStatus status);
+    Set<Request> fetchByDateAndDoctor(Long date, Long doctorId);
 }
