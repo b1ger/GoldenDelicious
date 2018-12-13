@@ -6,6 +6,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.ontario.goldendelicious.commands.StaffCommand;
 import org.ontario.goldendelicious.repositories.StaffRepository;
+import org.ontario.goldendelicious.services.RequestService;
 import org.ontario.goldendelicious.services.StaffServiceImpl;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletResponse;
@@ -26,12 +27,14 @@ public class StaffControllerTest {
     @Mock
     private StaffServiceImpl staffService;
     @Mock
+    private RequestService requestService;
+    @Mock
     private StaffRepository staffRepository;
 
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
-        controller = new StaffController(staffService);
+        controller = new StaffController(staffService, requestService);
         mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
     }
 

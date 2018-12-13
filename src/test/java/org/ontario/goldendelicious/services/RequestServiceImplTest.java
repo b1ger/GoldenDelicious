@@ -14,6 +14,8 @@ import org.ontario.goldendelicious.repositories.RequestRepository;
 import java.util.HashSet;
 import java.util.Set;
 
+import static org.hamcrest.CoreMatchers.hasItems;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -78,5 +80,28 @@ public class RequestServiceImplTest {
 
         // then
         verify(requestToRequestCommand, times(2)).convert(any());
+    }
+
+    @Test
+    public void shouldReturnAvailableTime() {
+        // given
+        Request request = new Request();
+        request.setId(1L);
+        request.setDate(1544624325L);
+        request.setTime("9:00");
+        Request request2 = new Request();
+        request2.setId(2L);
+        request2.setTime("11:00");
+        request2.setDate(1544624325L);;
+        Set<Request> requestSet = new HashSet<>();
+        requestSet.add(request);
+        requestSet.add(request2);
+
+        // when
+        when(requestRepository.findByDateAndDoctorId(anyLong(), anyLong())).thenReturn(requestSet);
+        Set<Request> requestSet1 = service.fetchByDateAndDoctor(anyLong(), anyLong());
+
+        // then
+        assertThat(requestSet1, hasItems(request, request2));
     }
 }

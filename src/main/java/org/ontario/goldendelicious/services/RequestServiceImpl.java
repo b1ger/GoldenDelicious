@@ -44,4 +44,9 @@ public class RequestServiceImpl implements RequestService {
                 .map(request -> requestToRequestCommand.convert(request))
                 .collect(Collectors.toSet());
     }
+
+    @Override
+    public Set<Request> fetchByDateAndDoctor(Long date, Long doctorId) {
+        return requestRepository.findByDateAndDoctorId(date, doctorId);
+    }
 }
