@@ -33,6 +33,7 @@ public class IndexController {
     public String indexAction(Model model) {
         model.addAttribute("request", new RequestCommand());
         model.addAttribute("doctors", staffService.getDoctors());
+        model.addAttribute("newRequests", requestService.fetchByStatus(RequestStatus.NEW));
         return "index";
     }
 

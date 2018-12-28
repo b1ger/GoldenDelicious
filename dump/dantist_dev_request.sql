@@ -30,10 +30,11 @@ CREATE TABLE `request` (
   `doctor_id` bigint(20) DEFAULT NULL,
   `status` varchar(45) NOT NULL,
   `phone` varchar(45) NOT NULL,
-  `date` date DEFAULT NULL,
-  `time` varchar(10) DEFAULT NULL,
+  `date` bigint(20) NOT NULL,
+  `time` varchar(10) NOT NULL,
+  `email` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -42,6 +43,7 @@ CREATE TABLE `request` (
 
 LOCK TABLES `request` WRITE;
 /*!40000 ALTER TABLE `request` DISABLE KEYS */;
+INSERT INTO `request` VALUES (1,'Bohdan','Herashchenko','TREATMENT',5,'NEW','093-188-49-02',1515795120000,'9:00','b.gerashchencko@gmail.com'),(2,'Bohdan','Herashchenko','TREATMENT',5,'NEW','093-188-49-02',1544652000000,'9:00','b.gerashchencko@gmail.com'),(3,'Bohdan','Herashchenko','TREATMENT',5,'NEW','093-188-49-02',1545256800000,'10:00','b.gerashchecko@gmail.com'),(4,'Bohdan','Test','REMOVING',5,'NEW','093-188-49-02',1545256800000,'11:00','bohdan.herashchenko@volia.com'),(5,'Bohdan','Herashchenko','IMPLANTING',5,'NEW','093-188-49-02',1546984800000,'14:00','system@localhost');
 /*!40000 ALTER TABLE `request` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -54,4 +56,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-11-30 16:19:35
+-- Dump completed on 2018-12-28 16:29:44

@@ -6,6 +6,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.ontario.goldendelicious.domain.Request;
 import org.ontario.goldendelicious.domain.Staff;
+import org.ontario.goldendelicious.domain.enums.RequestStatus;
 import org.ontario.goldendelicious.domain.enums.ServiceType;
 import org.ontario.goldendelicious.domain.enums.StaffType;
 import org.ontario.goldendelicious.repositories.RequestRepository;
@@ -16,7 +17,9 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
@@ -58,14 +61,25 @@ public class IndexControllerTest {
         doctor.setType(StaffType.DOCTOR);
         List<Staff> doctors = new ArrayList<>();
         doctors.add(doctor);
+        Request request1 = new Request();
+        request1.setId(1L);
+        Request request2 = new Request();
+        request2.setId(2L);
+        Set<Request> set = new HashSet<>();
+        set.add(request1);
+        set.add(request2);
 
         when(staffRepository.findByTypeOrderById(any())).thenReturn(doctors);
+        when(requestRepository.getAllByStatusOrderByDate(any())).thenReturn(set);
 
         mockMvc.perform(get("/"))
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("request"))
+                .andExpect(model().attributeExists("newRequests"))
                 .andExpect(model().attributeExists("doctors"))
                 .andExpect(view().name("index"));
+
+        verify(requestService, times(1)).fetchByStatus(RequestStatus.NEW);
     }
 
     @Test
@@ -78,7 +92,7 @@ public class IndexControllerTest {
                 .param("lastName", "LastName")
                 .param("phone", "093-429-45-89")
                 .param("email", "example@mail.com")
-                .param("serviceType", String.valueOf(ServiceType.SERVICE_1))
+                .param("serviceType", String.valueOf(ServiceType.TREATMENT))
                 .param("doctorId", "1458967")
                 .param("date", "10 SEP 1998")
                 .param("time", "23:59")

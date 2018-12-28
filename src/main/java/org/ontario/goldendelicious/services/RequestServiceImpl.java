@@ -6,9 +6,12 @@ import org.ontario.goldendelicious.converters.RequestCommandToRequest;
 import org.ontario.goldendelicious.converters.RequestToRequestCommand;
 import org.ontario.goldendelicious.domain.Request;
 import org.ontario.goldendelicious.domain.enums.RequestStatus;
+import org.ontario.goldendelicious.exceptions.NotFoundException;
 import org.ontario.goldendelicious.repositories.RequestRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -38,15 +41,26 @@ public class RequestServiceImpl implements RequestService {
     }
 
     @Override
-    public Set<RequestCommand> fetchByStatus(RequestStatus status) {
+    public List<RequestCommand> fetchByStatus(RequestStatus status) {
         return requestRepository.getAllByStatusOrderByDate(status)
                 .stream()
                 .map(request -> requestToRequestCommand.convert(request))
-                .collect(Collectors.toSet());
+                .collect(Collectors.toList());
     }
 
     @Override
     public Set<Request> fetchByDateAndDoctor(Long date, Long doctorId) {
         return requestRepository.findByDateAndDoctorId(date, doctorId);
+    }
+
+    @Override
+    public RequestCommand getById(Long id) {
+        Optional<Request> optional = requestRepository.findById(id);
+
+        if (! optional.isPresent()) {
+            throw new NotFoundException("Request not found by 'id': " + id);
+        }
+
+        return requestToRequestCommand.convert(optional.get());
     }
 }

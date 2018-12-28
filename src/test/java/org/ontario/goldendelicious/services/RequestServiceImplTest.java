@@ -12,12 +12,16 @@ import org.ontario.goldendelicious.domain.enums.RequestStatus;
 import org.ontario.goldendelicious.repositories.RequestRepository;
 
 import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
+
+import static org.junit.Assert.*;
 
 public class RequestServiceImplTest {
 
@@ -66,9 +70,11 @@ public class RequestServiceImplTest {
         // given
         Request request1 = new Request();
         request1.setId(1L);
+        request1.setDate(1546984800000L);
         request1.setStatus(RequestStatus.NEW);
         Request request2 = new Request();
         request2.setId(2L);
+        request2.setDate(1546984800000L);
         request2.setStatus(RequestStatus.NEW);
         Set<Request> requestSet = new HashSet<>();
         requestSet.add(request1);
@@ -76,7 +82,7 @@ public class RequestServiceImplTest {
 
         // when
         when(requestRepository.getAllByStatusOrderByDate(RequestStatus.NEW)).thenReturn(requestSet);
-        Set<RequestCommand> commands = service.fetchByStatus(RequestStatus.NEW);
+        List<RequestCommand> commands = service.fetchByStatus(RequestStatus.NEW);
 
         // then
         verify(requestToRequestCommand, times(2)).convert(any());
@@ -103,5 +109,28 @@ public class RequestServiceImplTest {
 
         // then
         assertThat(requestSet1, hasItems(request, request2));
+    }
+
+    @Test
+    public void shouldReturnRequestCommandById() {
+
+        // given
+        Request request = new Request();
+        request.setId(1L);
+        request.setDate(1546984800000L);
+        RequestCommand requestCommand = new RequestCommand();
+        requestCommand.setId(1L);
+        request.setStatus(RequestStatus.NEW);
+        Optional<Request> optionalRequest = Optional.of(request);
+
+        // when
+        when(requestRepository.findById(anyLong())).thenReturn(optionalRequest);
+        when(requestToRequestCommand.convert(any())).thenReturn(requestCommand);
+
+        RequestCommand command = service.getById(1L);
+
+        // then
+        assertNotNull(command);
+        assertEquals(1, Long.parseLong(String.valueOf(command.getId())));
     }
 }

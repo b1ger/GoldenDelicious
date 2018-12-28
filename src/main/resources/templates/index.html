@@ -1,14 +1,48 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+                xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="fragments/header :: header-content">
     <title id="pageTitle">GD</title>
 
 </head>
 
 <body>
-<div class="w-75 mx-auto">
+<div class="ml-5 mr-5">
     <nav th:replace="fragments/navbar :: navbar-content"></nav>
     <h1 th:utext="${#authentication.name}">Index page</h1>
+    <div class="container-fluid">
+        <div class="col col-6 float-right" sec:authorize="${hasRole('ROLE_ADMIN')}" th:if="${newRequests.size() > 0}">
+            <div class="card">
+                <div class="card-body">
+                    <div class="card-header">
+                        <h4 class="card-title">New requests</h4>
+                    </div>
+                    <table class="table">
+                        <thead class="thead-light">
+                        <tr>
+                            <th scope="col">Patient name</th>
+                            <th scope="col">Service type</th>
+                            <th scope="col">Date</th>
+                            <th scope="col"></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="r : ${newRequests}">
+                            <td th:text="${r.firstName + ' ' + r.lastName}">Patient Name</td>
+                            <td th:switch="${r.serviceType}">
+                                <span th:case="${T(org.ontario.goldendelicious.domain.enums.ServiceType).TREATMENT}">Treatment</span>
+                                <span th:case="${T(org.ontario.goldendelicious.domain.enums.ServiceType).REMOVING}">Removing</span>
+                                <span th:case="${T(org.ontario.goldendelicious.domain.enums.ServiceType).IMPLANTING}">Implanting</span>
+                            </td>
+                            <td th:text="${r.date + ', ' + r.time}"></td>
+                            <td><a class="badge badge-info" th:href="@{'/request/view/' + ${r.id}}" href="#">Process</a></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
     <div th:include="fragments/footer :: footer-scripts"></div>
 </div>
 </body>

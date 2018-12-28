@@ -33,8 +33,8 @@ public class RequestToRequestCommand implements Converter<Request, RequestComman
         command.setServiceType(source.getServiceType());
         command.setStatus(source.getStatus());
         SimpleDateFormat dateFormat = new SimpleDateFormat("d MMM y", Locale.ENGLISH);
-        Date date = Date.from(Instant.ofEpochSecond(source.getDate()));
-        command.setDate(dateFormat.format(date));
+        //Date date = Date.from(Instant.ofEpochSecond(source.getDate()));
+        command.setDate(dateFormat.format(source.getDate()));
         command.setTime(source.getTime());
 
         return command;
