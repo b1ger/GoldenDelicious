@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="fragments/header :: header-content">
+    <title id="pageTitle">New request</title>
+
+</head>
+
+<body>
+<div class="ml-5 mr-5">
+    <nav th:replace="fragments/navbar :: navbar-content"></nav>
+    <div class="container-fluid">
+        <div class="col col-md-8 mx-auto mt-lg-5 mx-auto">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title" th:text="'Request: ' + ${requestModel.id}"></h4>
+                </div>
+                <div class="card-body">
+                    <p th:text="${requestModel.toString()}"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div th:include="fragments/footer :: footer-scripts"></div>
+</div>
+
+</body>
+</html>

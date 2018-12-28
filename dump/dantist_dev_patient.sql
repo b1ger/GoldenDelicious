@@ -32,7 +32,11 @@ CREATE TABLE `patient` (
   `updated_at` bigint(20) DEFAULT NULL,
   `card_id` bigint(20) DEFAULT NULL,
   `address` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  `email` varchar(45) NOT NULL,
+  `phone` varchar(45) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `email_UNIQUE` (`email`),
+  UNIQUE KEY `phone_UNIQUE` (`phone`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -54,4 +58,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-11-30 16:19:34
+-- Dump completed on 2018-12-28 16:29:44

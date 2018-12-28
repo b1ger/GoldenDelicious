@@ -19,9 +19,9 @@ public class RequestToRequestCommandTest {
     private static final String LAST_NAME = "test";
     private static final String PHONE = "093-458-89-69";
     private static final String EMAIL = "exqmple@test.com";
-    private static final ServiceType SERVICE_TYPE = ServiceType.SERVICE_1;
+    private static final ServiceType SERVICE_TYPE = ServiceType.TREATMENT;
     private static final Long DOCTOR_ID = 2L;
-    private static final Long DATE = 1543874400L;
+    private static final Long DATE = 1546984800000L;
     private static final String TIME = "9:00";
     private static final RequestStatus REQUEST_STATUS = RequestStatus.NEW;
 
@@ -59,6 +59,6 @@ public class RequestToRequestCommandTest {
         // then
         assertEquals(ID, command.getId());
         assertEquals(EMAIL, command.getEmail());
-        assertEquals("4 Dec 2018", command.getDate());
+        assertEquals("9 Jan 2019", command.getDate());
     }
 }

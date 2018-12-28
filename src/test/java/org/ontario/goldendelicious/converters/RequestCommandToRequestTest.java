@@ -19,7 +19,7 @@ public class RequestCommandToRequestTest {
     private static final String LAST_NAME = "test";
     private static final String PHONE = "093-458-89-69";
     private static final String EMAIL = "exqmple@test.com";
-    private static final ServiceType SERVICE_TYPE = ServiceType.SERVICE_1;
+    private static final ServiceType SERVICE_TYPE = ServiceType.TREATMENT;
     private static final Long DOCTOR_ID = 2L;
     private static final String DATE = "2018-12-04";
     private static final String TIME = "9:00";

@@ -2,7 +2,7 @@ package org.ontario.goldendelicious.controllers;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
-import org.ontario.goldendelicious.Utils.StaffUtils;
+import org.ontario.goldendelicious.utils.StaffUtils;
 import org.ontario.goldendelicious.commands.StaffCommand;
 import org.ontario.goldendelicious.domain.Request;
 import org.ontario.goldendelicious.exceptions.ConvertionException;

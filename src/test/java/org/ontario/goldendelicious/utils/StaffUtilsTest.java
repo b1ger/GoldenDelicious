@@ -1,4 +1,4 @@
-package org.ontario.goldendelicious.Utils;
+package org.ontario.goldendelicious.utils;
 
 import org.junit.Test;
 import org.ontario.goldendelicious.domain.Request;
