@@ -34,16 +34,10 @@ public class StaffServiceImplTest {
     @Mock
     private AuthorityRepository authorityRepository;
 
-    @Mock
-    private StaffToStaffCommand staffToStaffCommand;
-
-    @Mock
-    private StaffCommandToStaff staffCommandToStaff;
-
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
-        staffService = new StaffServiceImpl(repository, authorityRepository, staffToStaffCommand, staffCommandToStaff);
+        staffService = new StaffServiceImpl(repository, authorityRepository);
     }
 
     @Test
@@ -86,15 +80,12 @@ public class StaffServiceImplTest {
         // given
         Staff staff = new Staff();
         staff.setId(1L);
+        staff.setBirthDate(568674000000L);
         Optional<Staff> staffOptional = Optional.of(staff);
 
         // when
         when(repository.findById(anyLong())).thenReturn(staffOptional);
 
-        StaffCommand staffCommand = new StaffCommand();
-        staffCommand.setId(1L);
-
-        when(staffToStaffCommand.convert(any())).thenReturn(staffCommand);
         StaffCommand commandById = staffService.findStaffCommandById(5L);
 
         // then
@@ -111,10 +102,12 @@ public class StaffServiceImplTest {
         command.setId(1L);
         command.setUserName("username");
         command.setPassword("password");
+        command.setBirthDate("28 Dec 1986");
         Staff staff = new Staff();
         staff.setId(1L);
         staff.setUserName("username");
         staff.setPassword("password");
+        staff.setBirthDate(568674000000L);
         MockMultipartFile mockFile = new MockMultipartFile("imagefile", "testing.txt", "text/plain", "GD".getBytes());
 
         // when
@@ -163,9 +156,11 @@ public class StaffServiceImplTest {
         Staff item1 = new Staff();
         item1.setId(1L);
         item1.setType(StaffType.ADMINISTRATOR);
+        item1.setBirthDate(568674000000L);
         Staff item2 = new Staff();
         item2.setId(2L);
         item2.setType(StaffType.DOCTOR);
+        item2.setBirthDate(568674000000L);
         List<Staff> items = new ArrayList<>();
         items.add(item1);
         items.add(item2);

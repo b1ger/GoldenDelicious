@@ -37,9 +37,16 @@ public class RequestCommandToRequest implements Converter<RequestCommand, Reques
             Date date = dateFormat.parse(source.getDate());
             request.setDate(date.getTime());
         } catch (ParseException e) {
-            throw new ConvertionException("Convertion RequestCommand to Request was failed: " + e.getMessage());
+            dateFormat = new SimpleDateFormat("d MMM y", Locale.ENGLISH);
+            try {
+                Date date = dateFormat.parse(source.getDate());
+                request.setDate(date.getTime());
+            } catch (ParseException e1) {
+                throw new ConvertionException("Convertion RequestCommand to Request was failed: " + e.getMessage());
+            }
         }
         request.setTime(source.getTime());
+        request.setDescription(source.getDescription());
 
         return request;
     }

@@ -36,6 +36,7 @@ public class RequestToRequestCommand implements Converter<Request, RequestComman
         //Date date = Date.from(Instant.ofEpochSecond(source.getDate()));
         command.setDate(dateFormat.format(source.getDate()));
         command.setTime(source.getTime());
+        command.setDescription(source.getDescription());
 
         return command;
     }

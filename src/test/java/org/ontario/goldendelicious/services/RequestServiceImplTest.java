@@ -39,7 +39,7 @@ public class RequestServiceImplTest {
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
-        service = new RequestServiceImpl(requestRepository, requestCommandToRequest, requestToRequestCommand);
+        service = new RequestServiceImpl(requestRepository);
     }
 
     @Test
@@ -50,16 +50,9 @@ public class RequestServiceImplTest {
         command.setId(1L);
         command.setFirstName("Test");
         command.setStatus(RequestStatus.NEW);
-        Request request = new Request();
-        request.setId(1L);
-        request.setFirstName("Test");
-        request.setStatus(RequestStatus.NEW);
+        command.setDate("2018-12-22");
 
-        // when
-        when(requestRepository.save(any())).thenReturn(request);
-        when(requestCommandToRequest.convert(any())).thenReturn(request);
-
-        service.save(command);
+        Request saved = service.save(command);
 
         // then
         verify(requestRepository, times(1)).save(any());
@@ -85,7 +78,7 @@ public class RequestServiceImplTest {
         List<RequestCommand> commands = service.fetchByStatus(RequestStatus.NEW);
 
         // then
-        verify(requestToRequestCommand, times(2)).convert(any());
+        assertEquals(requestSet.size(), commands.size());
     }
 
     @Test
