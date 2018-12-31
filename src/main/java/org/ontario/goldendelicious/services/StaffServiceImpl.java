@@ -32,14 +32,12 @@ public class StaffServiceImpl implements StaffService {
 
     public StaffServiceImpl(
             StaffRepository repository,
-            AuthorityRepository authorityRepository,
-            StaffToStaffCommand staffToStaffCommand,
-            StaffCommandToStaff staffCommandToStaff
+            AuthorityRepository authorityRepository
     ) {
         this.repository = repository;
         this.authorityRepository = authorityRepository;
-        this.staffToStaffCommand = staffToStaffCommand;
-        this.staffCommandToStaff = staffCommandToStaff;
+        this.staffToStaffCommand = new StaffToStaffCommand();
+        this.staffCommandToStaff = new StaffCommandToStaff();
     }
 
     @Override

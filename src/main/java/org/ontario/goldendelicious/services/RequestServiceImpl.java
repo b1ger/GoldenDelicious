@@ -23,14 +23,10 @@ public class RequestServiceImpl implements RequestService {
     private RequestCommandToRequest requestCommandToRequest;
     private RequestToRequestCommand requestToRequestCommand;
 
-    public RequestServiceImpl(
-            RequestRepository requestRepository,
-            RequestCommandToRequest requestCommandToRequest,
-            RequestToRequestCommand requestToRequestCommand
-    ) {
+    public RequestServiceImpl(RequestRepository requestRepository) {
         this.requestRepository = requestRepository;
-        this.requestCommandToRequest = requestCommandToRequest;
-        this.requestToRequestCommand = requestToRequestCommand;
+        this.requestCommandToRequest = new RequestCommandToRequest();
+        this.requestToRequestCommand = new RequestToRequestCommand();
     }
 
     @Override
@@ -62,5 +58,13 @@ public class RequestServiceImpl implements RequestService {
         }
 
         return requestToRequestCommand.convert(optional.get());
+    }
+
+    @Override
+    public RequestCommand updateRequest(RequestCommand updatable) {
+        Request request = requestCommandToRequest.convert(updatable);
+        Request detached = requestRepository.save(request);
+        RequestCommand command = requestToRequestCommand.convert(detached);
+        return command;
     }
 }

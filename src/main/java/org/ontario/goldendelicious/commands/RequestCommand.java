@@ -38,4 +38,5 @@ public class RequestCommand {
     @NotBlank
     private String time;
     private RequestStatus status;
+    private String description;
 }

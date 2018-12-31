@@ -29,8 +29,7 @@ public class StaffToStaffCommand implements Converter<Staff, StaffCommand> {
         command.setFirstName(source.getFirstName());
         command.setLastName(source.getLastName());
         SimpleDateFormat dateFormat = new SimpleDateFormat("d MMM y", Locale.ENGLISH);
-        Date date = Date.from(Instant.ofEpochSecond(source.getBirthDate()));
-        command.setBirthDate(dateFormat.format(date));
+        command.setBirthDate(dateFormat.format(source.getBirthDate()));
         command.setUserName(source.getUserName());
         command.setType(source.getType());
         command.setPassword(source.getPassword());

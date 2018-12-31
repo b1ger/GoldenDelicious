@@ -16,7 +16,40 @@
                     <h4 class="card-title" th:text="'Request: ' + ${requestModel.id}"></h4>
                 </div>
                 <div class="card-body">
-                    <p th:text="${requestModel.toString()}"></p>
+                    <table class="table table-striped">
+                        <tbody>
+                        <tr>
+                            <td>Name:</td>
+                            <td th:utext="${requestModel.firstName + ' ' +requestModel.lastName}"></td>
+                        </tr>
+                        <tr>
+                            <td>Phone: </td>
+                            <td th:text="${requestModel.phone}"></td>
+                        </tr>
+                        <tr>
+                            <td>Date: </td>
+                            <td th:text="${requestModel.date + ' ' + requestModel.time}"></td>
+                        </tr>
+                        <tr>
+                            <td>Service: </td>
+                            <td th:switch="${requestModel.serviceType}">
+                                <span th:case="${T(org.ontario.goldendelicious.domain.enums.ServiceType).TREATMENT}">Treatment</span>
+                                <span th:case="${T(org.ontario.goldendelicious.domain.enums.ServiceType).REMOVING}">Removing</span>
+                                <span th:case="${T(org.ontario.goldendelicious.domain.enums.ServiceType).IMPLANTING}">Implanting</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Doctor: </td>
+                            <td th:text="${doctor.firstName + ' ' + doctor.lastName}"></td>
+                        </tr>
+                        <tr>
+                            <td>Description: </td>
+                            <td th:text="${requestModel.description}"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <a class="btn btn-outline-danger float-right" th:href="@{'/request/' + ${requestModel.id} + '/deny'}">Deny</a>
+                    <a class="btn btn-outline-success float-right mr-2" th:href="@{'/request/' + ${requestModel.id} + '/accept'}">Accept</a>
                 </div>
             </div>
         </div>

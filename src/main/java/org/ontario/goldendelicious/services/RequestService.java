@@ -13,4 +13,5 @@ public interface RequestService {
     List<RequestCommand> fetchByStatus(RequestStatus status);
     Set<Request> fetchByDateAndDoctor(Long date, Long doctorId);
     RequestCommand getById(Long id);
+    RequestCommand updateRequest(RequestCommand updatable);
 }
