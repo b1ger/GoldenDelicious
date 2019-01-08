@@ -43,4 +43,9 @@ public class RequestController {
 
         return "redirect:/index";
     }
+
+    @GetMapping("/index")
+    public String indexAction() {
+        return "request/index";
+    }
 }

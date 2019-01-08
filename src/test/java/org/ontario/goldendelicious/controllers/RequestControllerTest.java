@@ -80,7 +80,6 @@ public class RequestControllerTest {
 
     @Test
     public void shouldAcceptRequest() throws Exception {
-
         // given
         RequestCommand command = new RequestCommand();
         command.setId(1L);
@@ -106,7 +105,28 @@ public class RequestControllerTest {
     }
 
     @Test
-    public void shouldDeclineRequest() {
-        assertTrue(false);
+    public void shouldDeclineRequest() throws Exception {
+        // given
+        RequestCommand command = new RequestCommand();
+        command.setId(1L);
+        command.setDate("9 Jan 2019");
+        command.setStatus(RequestStatus.NEW);
+        Request request = new Request();
+        request.setId(1L);
+        request.setDate(1546984800000L);
+        request.setStatus(RequestStatus.DECLINED);
+        Optional<Request> optionalRequest = Optional.of(request);
+
+        // when
+        when(requestRepository.findById(anyLong())).thenReturn(optionalRequest);
+        when(requestRepository.save(any())).thenReturn(request);
+
+        RequestCommand updated = requestService.updateRequest(command);
+
+        // then
+        mockMvc.perform(get("/request/1/accept"))
+                .andExpect(status().is3xxRedirection());
+
+        assertEquals(RequestStatus.DECLINED, updated.getStatus());
     }
 }

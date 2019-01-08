@@ -70,6 +70,6 @@ public class StaffToStaffCommandTest {
         assertEquals(ID_VALUE, command.getId());
         assertEquals(USERNAME, command.getUserName());
         assertArrayEquals(IMAGE, command.getImage());
-        assertEquals("27 Jun 1990", command.getBirthDate());
+        assertEquals("28 Jun 1990", command.getBirthDate());
     }
 }
