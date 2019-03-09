@@ -1,0 +1,12 @@
+logging.level.org.ontario.goldendelicious=debug
+
+#spring.datasource.url=jdbc:mysql://localhost:3306/dantist_dev
+#spring.datasource.username=dantist_dev_user
+#spring.datasource.password=ontario
+
+spring.jpa.hibernate.ddl-auto=validate
+spring.jpa.database-platform=org.hibernate.dialect.MySQL5InnoDBDialect
+spring.jpa.database=mysql
+spring.jpa.show-sql=true
+
+spring.thymeleaf.cache=false
